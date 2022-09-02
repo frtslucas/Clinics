@@ -6,16 +6,17 @@ namespace Clinics.Domain.Aggregates.PatientAggregate.ValueObjects
 {
     public record City : ValueObject, IValueObject
     {
-        public string CityName { get; }
-        public string State { get; }
+        public string CityName { get; } = null!;
+        public string? State { get; }
 
-        internal City(string cityName, string state)
+        internal City(string cityName, string? state)
         {
             Guard.Against.NullOrEmpty<EmptyCityNameException>(cityName);
-            Guard.Against.NullOrEmpty<EmptyStateException>(state);
 
             CityName = cityName;
             State = state;
         }
+
+        private City() { }
     }
 }

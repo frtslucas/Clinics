@@ -14,32 +14,32 @@ namespace Clinics.Domain.Aggregates.PatientAggregate
         public Age Age { get; private set; }
         public Occupation Occupation { get; private set; }
         public PlaceOfBirth PlaceOfBirth { get; private set; }
+        public Address Address { get; private set; }
         public MoneyValue AgreedValue { get; private set; }
-        public Address? Address { get; private set; }
-        public RG? RG { get; private set; }
-        public CPF? CPF { get; private set; }
+        public RG RG { get; private set; }
+        public CPF CPF { get; private set; }
         public bool Active { get; private set; } = true;
 
         private readonly List<Session> _sessions = new();
         public IReadOnlyList<Session> Sessions => _sessions.AsReadOnly();
 
         public Patient(
+            PatientId id,
             Name name,
             Age age,
             Occupation occupation,
             PlaceOfBirth placeOfBirth,
+            Address address,
             MoneyValue agreedValue,
-            Address? address = null,
-            RG? rG = null,
-            CPF? cPF = null)
+            RG rG,
+            CPF cPF) : base(id) 
         {
             Name = name;
             Age = age;
             Occupation = occupation;
             PlaceOfBirth = placeOfBirth;
-            AgreedValue = agreedValue;
-
             Address = address;
+            AgreedValue = agreedValue;
             RG = rG;
             CPF = cPF;
         }
@@ -48,6 +48,9 @@ namespace Clinics.Domain.Aggregates.PatientAggregate
         {
             if (!Active)
                 throw new InactivePacientException();
+
+            if (AgreedValue is null)
+                throw new AgreedValueNotSetException(Name);
 
             var session = new Session(AgreedValue, date, observations);
 
@@ -90,6 +93,15 @@ namespace Clinics.Domain.Aggregates.PatientAggregate
                 AddDomainEvent(new SessionPaidDomainEvent(session.Id));
         }
 
+        public void SetAgreedValue(MoneyValue value)
+        {
+            if (!Active)
+                throw new InactivePacientException();
+
+            AgreedValue = value;
+            AddDomainEvent(new AgreedValueSetDomainEvent(Id, AgreedValue));
+        }
+
         public void Inactivate()
         {
             Active = false;
@@ -103,5 +115,11 @@ namespace Clinics.Domain.Aggregates.PatientAggregate
 
             AddDomainEvent(new PatientReactivatedDomainEvent(Id));
         }
+
+        #region EF
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        private Patient() { }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        #endregion
     }
 }

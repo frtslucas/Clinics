@@ -6,7 +6,7 @@ namespace Clinics.Domain.Aggregates.PatientAggregate.ValueObjects
 {
     public record Occupation : ValueObject, IValueObject
     {
-        public string Value { get; }
+        public string Value { get; } = null!;
 
         public Occupation(string value)
         {
@@ -14,5 +14,9 @@ namespace Clinics.Domain.Aggregates.PatientAggregate.ValueObjects
 
             Value = value;
         }
+
+        private Occupation() { }
+
+        public static Occupation FromString(string occupation) => new(occupation);
     }
 }

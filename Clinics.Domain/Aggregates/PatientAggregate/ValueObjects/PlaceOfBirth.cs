@@ -6,7 +6,7 @@ namespace Clinics.Domain.Aggregates.PatientAggregate.ValueObjects
 {
     public record PlaceOfBirth : ValueObject, IValueObject
     {
-        public string Country { get; }
+        public string Country { get; } = null!;
 
         public PlaceOfBirth(string country)
         {
@@ -14,5 +14,9 @@ namespace Clinics.Domain.Aggregates.PatientAggregate.ValueObjects
 
             Country = country;
         }
+
+        private PlaceOfBirth() { }
+
+        public static PlaceOfBirth FromString(string placeOfBirth) => new(placeOfBirth);
     }
 }

@@ -6,9 +6,9 @@ namespace Clinics.Domain.Aggregates.PatientAggregate.ValueObjects
 {
     public abstract record Document : ValueObject, IValueObject
     {
-        protected readonly string _mask;
+        protected readonly string _mask = null!;
 
-        public string Value { get; }
+        public string Value { get; } = null!;
 
         protected Document(string value, string mask, string propName, int maxLength, int? minLength = null)
         {
@@ -19,6 +19,8 @@ namespace Clinics.Domain.Aggregates.PatientAggregate.ValueObjects
             _mask = mask;
         }
 
+        protected Document() { }
+
         public string WithMask() => Value.Mask(_mask);
     }
 
@@ -27,6 +29,10 @@ namespace Clinics.Domain.Aggregates.PatientAggregate.ValueObjects
         public RG(string value) : base(value, "##.###.###-#", nameof(RG), 9, 9)
         {
         }
+
+        private RG() : base() { }
+
+        public static RG FromString(string value) => new(value);
     }
 
     public record CPF : Document
@@ -34,5 +40,9 @@ namespace Clinics.Domain.Aggregates.PatientAggregate.ValueObjects
         public CPF(string value) : base(value, "###.###.###-##", nameof(CPF), 11, 11)
         {
         }
+
+        private CPF() : base() { }
+
+        public static CPF FromString(string value) => new(value);
     }
 }

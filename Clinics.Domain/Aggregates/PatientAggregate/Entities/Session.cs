@@ -11,7 +11,7 @@ namespace Clinics.Domain.Aggregates.PatientAggregate.Entities
         public DateTime Date { get; set; }
         public string? Observations { get; private set; }
         public bool Done { get; private set; }
-        public bool Paid { get => _payments.Sum(a => a.MoneyValue.Value) == MoneyValue.Value; }
+        public bool Paid { get; private set; }
 
         private readonly List<Payment> _payments = new();
         public IReadOnlyList<Payment> Payments => _payments.AsReadOnly();
@@ -34,6 +34,14 @@ namespace Clinics.Domain.Aggregates.PatientAggregate.Entities
                 throw new InvalidPaymentException();
 
             _payments.Add(payment);
+
+            Paid = _payments.Sum(a => a.MoneyValue.Value) == MoneyValue.Value;
         }
+
+        #region EF
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        private Session() { }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        #endregion
     }
 }

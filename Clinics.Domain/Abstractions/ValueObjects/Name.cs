@@ -3,9 +3,9 @@ using Clinics.Domain.Exceptions;
 
 namespace Clinics.Domain.Abstractions.ValueObjects
 {
-    public abstract record Name : ValueObject, IValueObject
+    public class Name : ValueObjectClass, IValueObject
     {
-        protected string Value { get; }
+        public string Value { get; } = null!;
 
         public Name(string value)
         {
@@ -13,5 +13,11 @@ namespace Clinics.Domain.Abstractions.ValueObjects
 
             Value = value;
         }
+
+        public Name() { }
+
+        public override string ToString() => Value;
+
+        public static Name FromString(string name) => new(name);
     }
 }

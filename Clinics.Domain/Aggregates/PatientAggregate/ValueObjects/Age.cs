@@ -7,7 +7,7 @@ namespace Clinics.Domain.Aggregates.PatientAggregate.ValueObjects
     public record Age : ValueObject, IValueObject
     {
         public DateTime BirthDate { get; }
-        public int CurrentAge { get => GetAge(); }
+        public ushort CurrentAge { get => GetAge(); }
 
         public Age(DateTime birthDate)
         {
@@ -16,14 +16,18 @@ namespace Clinics.Domain.Aggregates.PatientAggregate.ValueObjects
             BirthDate = birthDate;
         }
 
-        private int GetAge()
+        private Age() { }
+
+        private ushort GetAge()
         {
             var age = DateTime.Now.Year - BirthDate.Year;
 
             if (BirthDate.Month < DateTime.Now.Month || BirthDate.Day < DateTime.Now.Day)
                 age--;
 
-            return age;
+            return (ushort)age;
         }
+
+        public static Age FromDateTime(DateTime dateTime) => new(dateTime);
     }
 }

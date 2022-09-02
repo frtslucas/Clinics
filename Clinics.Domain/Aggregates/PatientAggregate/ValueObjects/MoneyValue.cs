@@ -15,5 +15,9 @@ namespace Clinics.Domain.Aggregates.PatientAggregate.ValueObjects
 
             Value = value;
         }
+
+        private MoneyValue() { }
+
+        public static MoneyValue FromDecimal(decimal value) => new(value);
     }
 }

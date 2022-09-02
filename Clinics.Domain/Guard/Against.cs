@@ -49,7 +49,7 @@ namespace Clinics.Domain.Guard
         public static void InvalidPastDateTime<TException>(DateTime value)
             where TException : CustomException, new()
         {
-            if (value <= DateTime.UtcNow)
+            if (value > DateTime.UtcNow)
                 throw new TException();
         }
     }

@@ -1,0 +1,11 @@
+﻿using Clinics.Application.Abstractions.Interfaces;
+
+namespace Clinics.Application.Command.AddSessionToPatient
+{
+    public record AddSessionToPatientCommand : ICommand
+    {
+        public Guid PatientId { get; set; }
+        public DateTime Date { get; set; }
+        public string? Observations { get; set; }
+    }
+}
