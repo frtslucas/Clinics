@@ -4,8 +4,7 @@ namespace Clinics.Application.Command.AddPaymentToSession
 {
     public record AddPaymentToSessionCommand : ICommand
     {
-        public Guid PatientId { get; set; } = default!;
-        public Guid SessionId { get; set; } = default!;
+        public Guid SessionId { get; set; }
         public decimal PaymentValue { get; set; }
         public DateTime PaymentDate { get; set; }
     }

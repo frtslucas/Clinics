@@ -1,12 +1,19 @@
 ﻿using Clinics.Domain.Abstractions;
 using Clinics.Domain.Abstractions.Interfaces;
+using Clinics.Domain.Aggregates.PatientAggregate;
 using Clinics.Domain.Aggregates.PatientAggregate.ValueObjects;
+using Clinics.Domain.Aggregates.SessionAggregate.Entities;
+using Clinics.Domain.Aggregates.SessionAggregate.Events;
+using Clinics.Domain.Aggregates.SessionAggregate.ValueObjects;
 using Clinics.Domain.Exceptions;
+using Clinics.Domain.Shared;
 
-namespace Clinics.Domain.Aggregates.PatientAggregate.Entities
+namespace Clinics.Domain.Aggregates.SessionAggregate
 {
-    public class Session : Entity<SessionId>, IEntity<SessionId>
+    public class Session : AggregateRoot<SessionId>, IAggregateRoot<SessionId>
     {
+        public PatientId PatientId { get; init; }
+
         public MoneyValue MoneyValue { get; private set; }
         public DateTime Date { get; set; }
         public string? Observations { get; private set; }
@@ -16,16 +23,22 @@ namespace Clinics.Domain.Aggregates.PatientAggregate.Entities
         private readonly List<Payment> _payments = new();
         public IReadOnlyList<Payment> Payments => _payments.AsReadOnly();
 
-        public Session(MoneyValue moneyValue, DateTime date, string? observations)
+        private Session(SessionId id, PatientId patientId, MoneyValue moneyValue, DateTime date, string? observations) : base(id)
         {
+            PatientId = patientId;
             MoneyValue = moneyValue;
             Date = date;
             Observations = observations;
+
+            AddDomainEvent(new SessionCreatedDomainEvent(this));
         }
 
-        public void MarkAsDone()
+        public void MarkAsDone(Payment? payment = null)
         {
             Done = true;
+
+            if (payment is not null)
+                AddPayment(payment);
         }
 
         public void AddPayment(Payment payment)
@@ -36,6 +49,22 @@ namespace Clinics.Domain.Aggregates.PatientAggregate.Entities
             _payments.Add(payment);
 
             Paid = _payments.Sum(a => a.MoneyValue.Value) == MoneyValue.Value;
+
+            AddDomainEvent(new PaymentAddedToSessionDomainEvent(Id, payment.Id));
+
+            if (Paid)
+                AddDomainEvent(new SessionPaidDomainEvent(Id));
+        }
+
+        public static Session NewSession(SessionId sessionId, Patient patient, DateTime date, string? observations)
+        {
+            if (!patient.Active)
+                throw new InactivePacientException();
+
+            if (patient.AgreedValue is null)
+                throw new AgreedValueNotSetException(patient.Name);
+
+            return new(sessionId, patient.Id, patient.AgreedValue, date, observations);
         }
 
         #region EF

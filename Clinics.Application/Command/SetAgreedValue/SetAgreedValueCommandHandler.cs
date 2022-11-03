@@ -2,6 +2,7 @@
 using Clinics.Application.Abstractions.Interfaces;
 using Clinics.Domain.Aggregates.PatientAggregate;
 using Clinics.Domain.Aggregates.PatientAggregate.ValueObjects;
+using Clinics.Domain.Shared;
 
 namespace Clinics.Application.Command.SetAgreedValue
 {
@@ -16,8 +17,7 @@ namespace Clinics.Application.Command.SetAgreedValue
 
         public async Task<Result> HandleAsync(SetAgreedValueCommand command)
         {
-            var patientId = PatientId.FromGuid(command.PatientId);
-            var patient = await _patientRepository.FindByIdAsync(patientId);
+            var patient = await _patientRepository.FindByIdAsync(PatientId.FromGuid(command.PatientId));
 
             if (patient is null)
                 return Result.Fail(Error.NotFound);

@@ -1,36 +1,35 @@
 ﻿using Clinics.Application.Abstractions;
 using Clinics.Application.Abstractions.Interfaces;
-using Clinics.Domain.Aggregates.PatientAggregate;
-using Clinics.Domain.Aggregates.PatientAggregate.Entities;
-using Clinics.Domain.Aggregates.PatientAggregate.ValueObjects;
+using Clinics.Domain.Aggregates.SessionAggregate;
+using Clinics.Domain.Aggregates.SessionAggregate.Entities;
+using Clinics.Domain.Aggregates.SessionAggregate.ValueObjects;
+using Clinics.Domain.Shared;
 
 namespace Clinics.Application.Command.MarkSessionAsDone
 {
     internal sealed class MarkSessionAsDoneCommandHandler : ICommandHandler<MarkSessionAsDoneCommand>
     {
-        private readonly IPatientRepository _patientRepository;
+        private readonly ISessionRepository _sessionRepository;
 
-        public MarkSessionAsDoneCommandHandler(IPatientRepository patientRepository)
+        public MarkSessionAsDoneCommandHandler(ISessionRepository sessionRepository)
         {
-            _patientRepository = patientRepository;
+            _sessionRepository = sessionRepository;
         }
 
         public async Task<Result> HandleAsync(MarkSessionAsDoneCommand command)
         {
-            var patientId = PatientId.FromGuid(command.PatientId);
-            var patient = await _patientRepository.FindByIdAsync(patientId);
+            var session = await _sessionRepository.FindByIdAsync(SessionId.FromGuid(command.SessionId));
 
-            if (patient is null)
+            if (session is null)
                 return Result.Fail(Error.NotFound);
 
-            var sessionId = SessionId.FromGuid(command.SessionId);
             var payment = command.PaymentValue.HasValue && command.PaymentDate.HasValue ? 
                 new Payment(MoneyValue.FromDecimal(command.PaymentValue.Value), command.PaymentDate.Value) : 
                 null;
 
-            patient.MarkSessionAsDone(sessionId, payment);
+            session.MarkAsDone(payment);
 
-            await _patientRepository.UpdateAsync(patient);
+            await _sessionRepository.UpdateAsync(session);
 
             return Result.Success;
         }

@@ -32,8 +32,38 @@ namespace Clinics.Infrastructure.EntityFramework.Command.Configuration.PatientAg
 
             builder.OwnsOne(p => p.PlaceOfBirth, pb =>
             {
-                pb.Property(pb => pb.Country).HasColumnName("CountryOfBirth");
+                pb.Property(pb => pb.Country).HasColumnName(nameof(Patient.PlaceOfBirth)).IsRequired(false);
             });
+
+            builder.Navigation(p => p.PlaceOfBirth).IsRequired();
+
+            builder.OwnsOne(p => p.Address, a =>
+            {
+                a.Property(a => a.StreetAddress).HasColumnName(nameof(Address.StreetAddress)).IsRequired(false);
+                a.Property(a => a.StreetNumber).HasColumnName(nameof(Address.StreetNumber)).IsRequired(false);
+                a.Property(a => a.ExtraLine).HasColumnName(nameof(Address.ExtraLine)).IsRequired(false);
+                a.OwnsOne(a => a.City, c =>
+                {
+                    c.Property(c => c.CityName).HasColumnName("City").IsRequired(false);
+                    c.Property(c => c.State).HasColumnName(nameof(City.State)).IsRequired(false);
+                });
+            });
+
+            builder.Navigation(p => p.Address).IsRequired();
+
+            builder.OwnsOne(p => p.RG, r =>
+            {
+                r.Property(r => r.Value).HasColumnName(nameof(RG)).IsRequired(false);
+            });
+
+            builder.Navigation(p => p.RG).IsRequired();
+
+            builder.OwnsOne(p => p.CPF, c =>
+            {
+                c.Property(c => c.Value).HasColumnName(nameof(CPF)).IsRequired(false);
+            });
+
+            builder.Navigation(p => p.CPF).IsRequired();
 
             builder.OwnsOne(p => p.AgreedValue, av =>
             {
@@ -41,31 +71,6 @@ namespace Clinics.Infrastructure.EntityFramework.Command.Configuration.PatientAg
                     .HasColumnName(nameof(Patient.AgreedValue))
                     .HasPrecision(18, 2);
             });
-
-            builder.OwnsOne(p => p.Address, a =>
-            {
-                a.Property(a => a.StreetAddress).HasColumnName(nameof(Address.StreetAddress));
-                a.Property(a => a.StreetNumber).HasColumnName(nameof(Address.StreetNumber));
-                a.Property(a => a.ExtraLine).HasColumnName(nameof(Address.ExtraLine));
-                a.OwnsOne(a => a.City, c =>
-                {
-                    c.Property(c => c.CityName).HasColumnName("City");
-                    c.Property(c => c.State).HasColumnName(nameof(City.State));
-                });
-            });
-
-            builder.OwnsOne(p => p.RG, r =>
-            {
-                r.Property(r => r.Value).HasColumnName(nameof(RG));
-            });
-
-            builder.OwnsOne(p => p.CPF, c =>
-            {
-                c.Property(c => c.Value).HasColumnName(nameof(CPF));
-            });
-
-            builder.HasMany(a => a.Sessions)
-                .WithOne();
         }
     }
 }

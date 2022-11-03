@@ -1,5 +1,7 @@
 ﻿using Clinics.Application.Query.Models.PatientAggregate;
+using Clinics.Application.Query.Models.SessionAggregate;
 using Clinics.Infrastructure.EntityFramework.Query.Configuration.PatientAggregate;
+using Clinics.Infrastructure.EntityFramework.Query.Configuration.SessionAggregate;
 using Microsoft.EntityFrameworkCore;
 
 namespace Clinics.Infrastructure.EntityFramework.Query
@@ -7,6 +9,7 @@ namespace Clinics.Infrastructure.EntityFramework.Query
     internal sealed class QueryDbContext : DbContext
     {
         public DbSet<PatientQueryModel> Patients { get; set; } = null!;
+        public DbSet<SessionQueryModel> Sessions { get; set; } = null!;
 
         public QueryDbContext(DbContextOptions<QueryDbContext> options) : base(options)
         {

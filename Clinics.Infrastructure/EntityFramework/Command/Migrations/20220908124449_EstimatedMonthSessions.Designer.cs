@@ -4,6 +4,7 @@ using Clinics.Infrastructure.EntityFramework.Command;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Clinics.Infrastructure.EntityFramework.Command.Migrations
 {
     [DbContext(typeof(CommandDbContext))]
-    partial class CommandDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220908124449_EstimatedMonthSessions")]
+    partial class EstimatedMonthSessions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -140,6 +142,7 @@ namespace Clinics.Infrastructure.EntityFramework.Command.Migrations
                                         .HasColumnType("uniqueidentifier");
 
                                     b2.Property<string>("CityName")
+                                        .IsRequired()
                                         .HasColumnType("nvarchar(max)")
                                         .HasColumnName("City");
 
@@ -182,6 +185,7 @@ namespace Clinics.Infrastructure.EntityFramework.Command.Migrations
                                 .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("Value")
+                                .IsRequired()
                                 .HasColumnType("nvarchar(max)")
                                 .HasColumnName("CPF");
 
@@ -235,8 +239,9 @@ namespace Clinics.Infrastructure.EntityFramework.Command.Migrations
                                 .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("Country")
+                                .IsRequired()
                                 .HasColumnType("nvarchar(max)")
-                                .HasColumnName("PlaceOfBirth");
+                                .HasColumnName("CountryOfBirth");
 
                             b1.HasKey("PatientId");
 
@@ -252,6 +257,7 @@ namespace Clinics.Infrastructure.EntityFramework.Command.Migrations
                                 .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("Value")
+                                .IsRequired()
                                 .HasColumnType("nvarchar(max)")
                                 .HasColumnName("RG");
 

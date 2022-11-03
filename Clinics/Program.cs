@@ -12,6 +12,19 @@ builder.Services.AddControllers(options =>
     options.SuppressAsyncSuffixInActionNames = false;
 });
 
+var allowedOrigin = "allowedOrigin";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: allowedOrigin, policy =>
+    {
+        policy
+            .AllowAnyHeader()
+            .AllowAnyOrigin()
+            .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
 
@@ -26,5 +39,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.MapControllers();
+app.UseCors(allowedOrigin);
 
 app.Run();

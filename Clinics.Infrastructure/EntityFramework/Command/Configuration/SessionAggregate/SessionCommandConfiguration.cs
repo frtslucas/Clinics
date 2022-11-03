@@ -1,9 +1,11 @@
-﻿using Clinics.Domain.Aggregates.PatientAggregate.Entities;
-using Clinics.Domain.Aggregates.PatientAggregate.ValueObjects;
+﻿using Clinics.Domain.Aggregates.PatientAggregate;
+using Clinics.Domain.Aggregates.SessionAggregate;
+using Clinics.Domain.Aggregates.SessionAggregate.ValueObjects;
+using Clinics.Domain.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Clinics.Infrastructure.EntityFramework.Command.Configuration.PatientAggregate
+namespace Clinics.Infrastructure.EntityFramework.Command.Configuration.SessionAggregate
 {
     internal sealed class SessionCommandConfiguration : IEntityTypeConfiguration<Session>
     {
@@ -19,8 +21,17 @@ namespace Clinics.Infrastructure.EntityFramework.Command.Configuration.PatientAg
                 mv.Property(mv => mv.Value).HasColumnName(nameof(MoneyValue.Value)).HasPrecision(18, 2);
             });
 
+            builder.HasOne(typeof(Patient))
+                .WithMany()
+                .HasForeignKey("PatientId")
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
             builder.HasMany(a => a.Payments)
-                .WithOne();
+                .WithOne()
+                .HasForeignKey("SessionId")
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

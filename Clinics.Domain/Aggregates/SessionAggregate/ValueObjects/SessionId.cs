@@ -1,7 +1,7 @@
 ﻿using Clinics.Domain.Abstractions.Interfaces;
 using Clinics.Domain.Abstractions.ValueObjects;
 
-namespace Clinics.Domain.Aggregates.PatientAggregate.ValueObjects
+namespace Clinics.Domain.Aggregates.SessionAggregate.ValueObjects
 {
     public record SessionId : GuidIdentifier, IIdentifier<Guid>
     {

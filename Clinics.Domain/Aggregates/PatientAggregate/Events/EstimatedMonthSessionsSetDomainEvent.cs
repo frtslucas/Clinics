@@ -3,15 +3,15 @@ using Clinics.Domain.Aggregates.PatientAggregate.ValueObjects;
 
 namespace Clinics.Domain.Aggregates.PatientAggregate.Events
 {
-    internal record SessionAddedDomainEvent : IDomainEvent
+    internal record EstimatedMonthSessionsSetDomainEvent : IDomainEvent
     {
         public PatientId PatientId { get; }
-        public SessionId SessionId { get; }
+        public byte EstimatedMonthSessions { get; }
 
-        public SessionAddedDomainEvent(PatientId patientId, SessionId sessionId)
+        public EstimatedMonthSessionsSetDomainEvent(PatientId patientId, byte estimatedMonthSessions)
         {
             PatientId = patientId;
-            SessionId = sessionId;
+            EstimatedMonthSessions = estimatedMonthSessions;
         }
     }
 }

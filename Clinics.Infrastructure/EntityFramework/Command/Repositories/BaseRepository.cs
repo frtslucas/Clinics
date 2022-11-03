@@ -9,7 +9,7 @@ namespace Clinics.Infrastructure.EntityFramework.Command.Repositories
         where TAggregateRoot : class, IAggregateRoot<TIdentifier, Guid>, IEntity<TIdentifier, Guid>
         where TIdentifier : IIdentifier<Guid>, new()
     {
-        protected BaseRepository(CommandDbContext dbContext, IQueryable<TAggregateRoot> aggregate) : base(dbContext, aggregate)
+        protected BaseRepository(DbSet<TAggregateRoot> dbSet, IQueryable<TAggregateRoot> aggregate) : base(dbSet, aggregate)
         {
         }
     }
@@ -21,9 +21,9 @@ namespace Clinics.Infrastructure.EntityFramework.Command.Repositories
         protected readonly IQueryable<TAggregateRoot> _aggregate;
         protected readonly DbSet<TAggregateRoot> _dbSet;
 
-        public BaseRepository(CommandDbContext dbContext, IQueryable<TAggregateRoot> aggregate)
+        public BaseRepository(DbSet<TAggregateRoot> dbSet, IQueryable<TAggregateRoot> aggregate)
         {
-            _dbSet = dbContext.Set<TAggregateRoot>();
+            _dbSet = dbSet;
             _aggregate = aggregate;
         }
 

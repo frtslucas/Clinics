@@ -30,6 +30,7 @@ namespace Clinics.Application.DTOs
         public string? State { get; set; }
         public string? RG { get; set; }
         public string? CPF { get; set; }
+        public byte EstimatedMonthSessions { get; set; }
         public bool Active { get; set; }
 
         public IList<SessionDTO>? Sessions { get; set; }

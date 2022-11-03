@@ -1,5 +1,6 @@
 ﻿using Clinics.Application.Abstractions;
 using Clinics.Application.Abstractions.Interfaces;
+using Clinics.Application.Query.Models.SessionAggregate;
 
 namespace Clinics.Application.Query.Models.PatientAggregate
 {
@@ -21,7 +22,7 @@ namespace Clinics.Application.Query.Models.PatientAggregate
 
         public DateTime BirthDate { get; set; }
         public string Occupation { get; set; } = null!;
-        public string CountryOfBirth { get; set; } = null!;
+        public string PlaceOfBirth { get; set; } = null!;
         public decimal? AgreedValue { get; set; }
         public string? StreetAddress { get; set; }
         public int? StreetNumber { get; set; }
@@ -30,6 +31,8 @@ namespace Clinics.Application.Query.Models.PatientAggregate
         public string? State { get; set; }
         public string? RG { get; set; }
         public string? CPF { get; set; }
+        public byte EstimatedMonthSessions { get; set; }
+        public decimal ToPay { get => Sessions.Sum(a => a.ToPay); }
         public bool Active { get; set; }
 
         public virtual IList<SessionQueryModel> Sessions { get; set; } = null!;

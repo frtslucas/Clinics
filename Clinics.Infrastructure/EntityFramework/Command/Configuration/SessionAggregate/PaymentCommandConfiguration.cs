@@ -1,9 +1,10 @@
-﻿using Clinics.Domain.Aggregates.PatientAggregate.Entities;
-using Clinics.Domain.Aggregates.PatientAggregate.ValueObjects;
+﻿using Clinics.Domain.Aggregates.SessionAggregate.Entities;
+using Clinics.Domain.Aggregates.SessionAggregate.ValueObjects;
+using Clinics.Domain.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Clinics.Infrastructure.EntityFramework.Command.Configuration.PatientAggregate
+namespace Clinics.Infrastructure.EntityFramework.Command.Configuration.SessionAggregate
 {
     internal sealed class PaymentCommandConfiguration : IEntityTypeConfiguration<Payment>
     {

@@ -1,7 +1,8 @@
-﻿using Clinics.Domain.Abstractions.Interfaces;
+﻿using Clinics.Domain.Abstractions;
+using Clinics.Domain.Abstractions.Interfaces;
 using Clinics.Domain.Exceptions;
 
-namespace Clinics.Domain.Abstractions.ValueObjects
+namespace Clinics.Domain.Aggregates.PatientAggregate.ValueObjects
 {
     public class Name : ValueObjectClass, IValueObject
     {

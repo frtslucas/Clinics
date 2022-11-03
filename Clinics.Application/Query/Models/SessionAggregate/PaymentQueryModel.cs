@@ -1,7 +1,7 @@
 ﻿using Clinics.Application.Abstractions;
 using Clinics.Application.Abstractions.Interfaces;
 
-namespace Clinics.Application.Query.Models.PatientAggregate
+namespace Clinics.Application.Query.Models.SessionAggregate
 {
     public class PaymentQueryModel : BaseQueryModel, IQueryModel
     {

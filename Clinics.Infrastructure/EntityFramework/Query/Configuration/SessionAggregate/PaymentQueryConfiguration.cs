@@ -1,9 +1,9 @@
-﻿using Clinics.Application.Query.Models.PatientAggregate;
-using Clinics.Domain.Aggregates.PatientAggregate.Entities;
+﻿using Clinics.Application.Query.Models.SessionAggregate;
+using Clinics.Domain.Aggregates.SessionAggregate.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Clinics.Infrastructure.EntityFramework.Query.Configuration.PatientAggregate
+namespace Clinics.Infrastructure.EntityFramework.Query.Configuration.SessionAggregate
 {
     internal sealed class PaymentQueryConfiguration : IEntityTypeConfiguration<PaymentQueryModel>
     {

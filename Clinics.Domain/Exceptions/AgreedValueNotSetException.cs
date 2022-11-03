@@ -1,5 +1,5 @@
 ﻿using Clinics.Domain.Abstractions;
-using Clinics.Domain.Abstractions.ValueObjects;
+using Clinics.Domain.Aggregates.PatientAggregate.ValueObjects;
 
 namespace Clinics.Domain.Exceptions
 {

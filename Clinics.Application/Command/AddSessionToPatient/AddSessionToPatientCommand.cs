@@ -2,8 +2,9 @@
 
 namespace Clinics.Application.Command.AddSessionToPatient
 {
-    public record AddSessionToPatientCommand : ICommand
+    public record AddSessionToPatientCommand : ICreateCommand
     {
+        public Guid Id { get; set; }
         public Guid PatientId { get; set; }
         public DateTime Date { get; set; }
         public string? Observations { get; set; }

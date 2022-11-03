@@ -1,5 +1,13 @@
 ﻿namespace Clinics.Application.Abstractions.Interfaces
 {
+    public interface ISummaryDTO : IAggregateRootDTO
+    { 
+    }
+
+    public interface ISummaryDTO<TIdType> : IAggregateRootDTO<TIdType>
+    { 
+    }
+
     public interface IAggregateRootDTO : IAggregateRootDTO<Guid>
     {
     }

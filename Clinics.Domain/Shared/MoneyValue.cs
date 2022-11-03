@@ -3,7 +3,7 @@ using Clinics.Domain.Abstractions.Interfaces;
 using Clinics.Domain.Exceptions;
 using System.ComponentModel.DataAnnotations;
 
-namespace Clinics.Domain.Aggregates.PatientAggregate.ValueObjects
+namespace Clinics.Domain.Shared
 {
     public record MoneyValue : ValueObject, IValueObject
     {

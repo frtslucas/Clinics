@@ -1,8 +1,9 @@
 ﻿using Clinics.Domain.Abstractions;
 using Clinics.Domain.Abstractions.Interfaces;
-using Clinics.Domain.Aggregates.PatientAggregate.ValueObjects;
+using Clinics.Domain.Aggregates.SessionAggregate.ValueObjects;
+using Clinics.Domain.Shared;
 
-namespace Clinics.Domain.Aggregates.PatientAggregate.Entities
+namespace Clinics.Domain.Aggregates.SessionAggregate.Entities
 {
     public class Payment : Entity<PaymentId>, IEntity<PaymentId>
     {

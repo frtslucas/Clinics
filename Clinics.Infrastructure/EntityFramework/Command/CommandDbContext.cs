@@ -1,5 +1,7 @@
 ﻿using Clinics.Domain.Aggregates.PatientAggregate;
+using Clinics.Domain.Aggregates.SessionAggregate;
 using Clinics.Infrastructure.EntityFramework.Command.Configuration.PatientAggregate;
+using Clinics.Infrastructure.EntityFramework.Command.Configuration.SessionAggregate;
 using Microsoft.EntityFrameworkCore;
 
 namespace Clinics.Infrastructure.EntityFramework.Command
@@ -7,6 +9,7 @@ namespace Clinics.Infrastructure.EntityFramework.Command
     internal sealed class CommandDbContext : DbContext
     {
         public DbSet<Patient> Patients { get; set; } = null!;
+        public DbSet<Session> Sessions { get; set; } = null!;
 
         public CommandDbContext(DbContextOptions<CommandDbContext> options) : base(options)
         {

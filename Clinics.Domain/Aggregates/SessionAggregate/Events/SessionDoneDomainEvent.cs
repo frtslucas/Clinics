@@ -1,7 +1,8 @@
 ﻿using Clinics.Domain.Abstractions.Interfaces;
 using Clinics.Domain.Aggregates.PatientAggregate.ValueObjects;
+using Clinics.Domain.Aggregates.SessionAggregate.ValueObjects;
 
-namespace Clinics.Domain.Aggregates.PatientAggregate.Events
+namespace Clinics.Domain.Aggregates.SessionAggregate.Events
 {
     internal record SessionDoneDomainEvent : IDomainEvent
     {

@@ -1,8 +1,8 @@
 ﻿using Clinics.Application.Abstractions;
 using Clinics.Application.Abstractions.Interfaces;
-using Clinics.Domain.Abstractions.ValueObjects;
 using Clinics.Domain.Aggregates.PatientAggregate;
 using Clinics.Domain.Aggregates.PatientAggregate.ValueObjects;
+using Clinics.Domain.Shared;
 
 namespace Clinics.Application.Command.RegisterPatient
 {
@@ -21,13 +21,13 @@ namespace Clinics.Application.Command.RegisterPatient
             var name = Name.FromString(command.Name);
             var occupation = Occupation.FromString(command.Occupation);
             var age = Age.FromDateTime(command.BrithDate);
-            var placeOfBirth = PlaceOfBirth.FromString(command.PlaceOfBrith);
-            var address = new Address(command.StreetAddress, command.StreetNumber, command.ExtraLineAddress, command.City, command.State);
+            var placeOfBirth = PlaceOfBirth.FromString(command.PlaceOfBirth);
+            var address = !string.IsNullOrWhiteSpace(command.City) ? new Address(command.StreetAddress, command.StreetNumber, command.ExtraLineAddress, command.City, command.State) : null;
+            var rg = !string.IsNullOrWhiteSpace(command.RG) ? RG.FromString(command.RG) : null;
+            var cpf = !string.IsNullOrWhiteSpace(command.CPF) ? CPF.FromString(command.CPF) : null;
             var agreedValue = MoneyValue.FromDecimal(command.AgreedValue);
-            var rg = RG.FromString(command.RG);
-            var cpf = CPF.FromString(command.CPF);
 
-            var patient = new Patient(id, name, age, occupation, placeOfBirth, address, agreedValue, rg, cpf);
+            var patient = new Patient(id, name, age, occupation, placeOfBirth, address, rg, cpf, agreedValue, command.EstimatedMonthSessions);
 
             await _patientRepository.AddAsync(patient);
 

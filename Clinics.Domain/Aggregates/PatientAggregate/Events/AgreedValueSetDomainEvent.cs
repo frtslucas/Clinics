@@ -1,5 +1,6 @@
 ﻿using Clinics.Domain.Abstractions.Interfaces;
 using Clinics.Domain.Aggregates.PatientAggregate.ValueObjects;
+using Clinics.Domain.Shared;
 
 namespace Clinics.Domain.Aggregates.PatientAggregate.Events
 {
