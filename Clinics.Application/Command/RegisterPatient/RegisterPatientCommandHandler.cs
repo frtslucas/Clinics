@@ -20,7 +20,7 @@ namespace Clinics.Application.Command.RegisterPatient
             var id = PatientId.FromGuid(command.Id);
             var name = Name.FromString(command.Name);
             var occupation = Occupation.FromString(command.Occupation);
-            var age = Age.FromDateTime(command.BrithDate);
+            var age = Age.FromDateTime(command.BirthDate);
             var placeOfBirth = PlaceOfBirth.FromString(command.PlaceOfBirth);
             var address = !string.IsNullOrWhiteSpace(command.City) ? new Address(command.StreetAddress, command.StreetNumber, command.ExtraLineAddress, command.City, command.State) : null;
             var rg = !string.IsNullOrWhiteSpace(command.RG) ? RG.FromString(command.RG) : null;

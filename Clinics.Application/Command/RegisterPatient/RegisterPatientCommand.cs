@@ -6,7 +6,7 @@ namespace Clinics.Application.Command.RegisterPatient
     {
         public Guid Id { get; set; } = default!;
         public string Name { get; set; } = null!;
-        public DateTime BrithDate { get; set; } = default!;
+        public DateTime BirthDate { get; set; } = default!;
         public string Occupation { get; set; } = null!;
         public string PlaceOfBirth { get; set; } = null!;
         public string? StreetAddress { get; set; }

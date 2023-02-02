@@ -8,5 +8,8 @@ namespace Clinics.Application.Command.AddSessionToPatient
         public Guid PatientId { get; set; }
         public DateTime Date { get; set; }
         public string? Observations { get; set; }
+        public bool Done { get; set; }
+        public DateTime? PaymentDate { get; set; }
+        public decimal? PaymentValue { get; set; }
     }
 }

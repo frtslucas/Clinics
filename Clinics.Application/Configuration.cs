@@ -10,7 +10,8 @@ using Clinics.Application.Command.SetAgreedValue;
 using Clinics.Application.DTOs;
 using Clinics.Application.Query.GetAll;
 using Clinics.Application.Query.GetById;
-using Clinics.Application.Query.GetSummaries;
+using Clinics.Application.Query.GetPatientSummaries;
+using Clinics.Application.Query.GetSessionSummaries;
 using Clinics.Application.Query.Models.PatientAggregate;
 using Clinics.Application.Query.Models.SessionAggregate;
 using Microsoft.Extensions.DependencyInjection;
@@ -39,6 +40,8 @@ namespace Clinics.Application
 
             services.AddQueryHandlers<PatientQueryModel, PatientDTO, PatientSummaryDTO>();
             services.AddQueryHandlers<SessionQueryModel, SessionDTO, SessionSummaryDTO>();
+            services.AddQueryHandler<GetPatientSummariesQuery, IEnumerable<PatientSummaryDTO>, GetPatientSummariesQueryHandler>();
+            services.AddQueryHandler<GetSessionSummariesQuery, IEnumerable<SessionSummaryDTO>, GetSessionSummariesQueryHandler>();
 
             return services;
         }
@@ -57,7 +60,6 @@ namespace Clinics.Application
         {
             services.AddQueryHandler<GetByIdQuery<TDTO>, TDTO, GetByIdQueryHandler<TQueryModel, TDTO>>();
             services.AddQueryHandler<GetAllQuery<IEnumerable<TDTO>>, IEnumerable<TDTO>, GetAllQueryHandler<TQueryModel, TDTO>>();
-            services.AddQueryHandler<GetSummariesQuery<IEnumerable<TSummaryDTO>>, IEnumerable<TSummaryDTO>, GetSummariesQueryHandler<TQueryModel, TSummaryDTO>>();
         }
 
         private static void AddQueryHandler<TQuery, TResult, TQueryHandler>(this IServiceCollection services)

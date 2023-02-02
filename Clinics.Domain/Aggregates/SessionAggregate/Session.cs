@@ -56,7 +56,7 @@ namespace Clinics.Domain.Aggregates.SessionAggregate
                 AddDomainEvent(new SessionPaidDomainEvent(Id));
         }
 
-        public static Session NewSession(SessionId sessionId, Patient patient, DateTime date, string? observations)
+        public static Session Create(SessionId sessionId, Patient patient, DateTime date, string? observations)
         {
             if (!patient.Active)
                 throw new InactivePacientException();
