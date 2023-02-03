@@ -24,7 +24,7 @@ namespace Clinics.Application.Command.MarkSessionAsDone
                 return Result.Fail(Error.NotFound);
 
             var payment = command.PaymentValue.HasValue && command.PaymentDate.HasValue ? 
-                new Payment(MoneyValue.FromDecimal(command.PaymentValue.Value), command.PaymentDate.Value) : 
+                new SessionPayment(MoneyValue.FromDecimal(command.PaymentValue.Value), command.PaymentDate.Value) : 
                 null;
 
             session.MarkAsDone(payment);

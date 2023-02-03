@@ -21,9 +21,9 @@ namespace Clinics.Infrastructure.EntityFramework.Command.Configuration.SessionAg
                 mv.Property(mv => mv.Value).HasColumnName(nameof(MoneyValue.Value)).HasPrecision(18, 2);
             });
 
-            builder.HasOne(typeof(Patient))
+            builder.HasOne<Patient>()
                 .WithMany()
-                .HasForeignKey("PatientId")
+                .HasForeignKey(a => a.PatientId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 

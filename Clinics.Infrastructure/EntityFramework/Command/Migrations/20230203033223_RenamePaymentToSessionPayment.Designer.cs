@@ -4,6 +4,7 @@ using Clinics.Infrastructure.EntityFramework.Command;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Clinics.Infrastructure.EntityFramework.Command.Migrations
 {
     [DbContext(typeof(CommandDbContext))]
-    partial class CommandDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230203033223_RenamePaymentToSessionPayment")]
+    partial class RenamePaymentToSessionPayment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,27 +42,6 @@ namespace Clinics.Infrastructure.EntityFramework.Command.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Patient", "Clinics");
-                });
-
-            modelBuilder.Entity("Clinics.Domain.Aggregates.PaymentAggregate.Payment", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("PatientId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Version")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PatientId");
-
-                    b.ToTable("Payment", "Clinics");
                 });
 
             modelBuilder.Entity("Clinics.Domain.Aggregates.SessionAggregate.Entities.SessionPayment", b =>
@@ -306,36 +287,6 @@ namespace Clinics.Infrastructure.EntityFramework.Command.Migrations
                         .IsRequired();
 
                     b.Navigation("RG")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Clinics.Domain.Aggregates.PaymentAggregate.Payment", b =>
-                {
-                    b.HasOne("Clinics.Domain.Aggregates.PatientAggregate.Patient", null)
-                        .WithMany()
-                        .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.OwnsOne("Clinics.Domain.Shared.MoneyValue", "Value", b1 =>
-                        {
-                            b1.Property<Guid>("PaymentId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<decimal>("Value")
-                                .HasPrecision(18, 2)
-                                .HasColumnType("decimal(18,2)")
-                                .HasColumnName("Value");
-
-                            b1.HasKey("PaymentId");
-
-                            b1.ToTable("Payment", "Clinics");
-
-                            b1.WithOwner()
-                                .HasForeignKey("PaymentId");
-                        });
-
-                    b.Navigation("Value")
                         .IsRequired();
                 });
 

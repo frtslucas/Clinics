@@ -14,6 +14,6 @@ namespace Clinics.Application.DTOs
         public bool Paid { get; set; }
         public decimal? ToPay { get; set; }
 
-        public IList<PaymentDTO>? Payments { get; set; }
+        public IList<SessionPaymentDTO>? Payments { get; set; }
     }
 }

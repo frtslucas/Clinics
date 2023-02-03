@@ -19,9 +19,10 @@ namespace Clinics.Domain.Aggregates.SessionAggregate
         public string? Observations { get; private set; }
         public bool Done { get; private set; }
         public bool Paid { get; private set; }
+        public MoneyValue UnpaidValue { get => MoneyValue - MoneyValue.FromDecimal(_payments.Sum(a => a.MoneyValue.Value)); }
 
-        private readonly List<Payment> _payments = new();
-        public IReadOnlyList<Payment> Payments => _payments.AsReadOnly();
+        private readonly List<SessionPayment> _payments = new();
+        public IReadOnlyList<SessionPayment> Payments => _payments.AsReadOnly();
 
         private Session(SessionId id, PatientId patientId, MoneyValue moneyValue, DateTime date, string? observations) : base(id)
         {
@@ -33,7 +34,7 @@ namespace Clinics.Domain.Aggregates.SessionAggregate
             AddDomainEvent(new SessionCreatedDomainEvent(this));
         }
 
-        public void MarkAsDone(Payment? payment = null)
+        public void MarkAsDone(SessionPayment? payment = null)
         {
             Done = true;
 
@@ -41,7 +42,13 @@ namespace Clinics.Domain.Aggregates.SessionAggregate
                 AddPayment(payment);
         }
 
-        public void AddPayment(Payment payment)
+        public void AddPayment(MoneyValue moneyValue, DateTime dateTime)
+        {
+            var sessionPayment = new SessionPayment(moneyValue, dateTime);
+            AddPayment(sessionPayment);
+        }
+
+        public void AddPayment(SessionPayment payment)
         {
             if (_payments.Sum(a => a.MoneyValue.Value) + payment.MoneyValue.Value > MoneyValue.Value)
                 throw new InvalidPaymentException();
@@ -50,7 +57,7 @@ namespace Clinics.Domain.Aggregates.SessionAggregate
 
             Paid = _payments.Sum(a => a.MoneyValue.Value) == MoneyValue.Value;
 
-            AddDomainEvent(new PaymentAddedToSessionDomainEvent(Id, payment.Id));
+            AddDomainEvent(new SessionPaymentAddedToSessionDomainEvent(Id, payment.Id));
 
             if (Paid)
                 AddDomainEvent(new SessionPaidDomainEvent(Id));

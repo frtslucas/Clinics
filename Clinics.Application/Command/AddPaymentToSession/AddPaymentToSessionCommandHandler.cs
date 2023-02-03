@@ -23,7 +23,7 @@ namespace Clinics.Application.Command.AddPaymentToSession
             if (session is null)
                 return Result.Fail(Error.NotFound);
 
-            var payment = new Payment(MoneyValue.FromDecimal(command.PaymentValue), command.PaymentDate);
+            var payment = new SessionPayment(MoneyValue.FromDecimal(command.PaymentValue), command.PaymentDate);
 
             session.AddPayment(payment);
 

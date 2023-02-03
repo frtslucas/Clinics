@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Clinics.Application.DTOs;
 using Clinics.Application.Query.Models.PatientAggregate;
+using Clinics.Application.Query.Models.PaymentAggregate;
 using Clinics.Application.Query.Models.SessionAggregate;
 
 namespace Clinics.Application
@@ -11,6 +12,7 @@ namespace Clinics.Application
         {
             CreateMap<PatientQueryModel, PatientDTO>().ReverseMap();
             CreateMap<SessionQueryModel, SessionDTO>().ReverseMap();
+            CreateMap<SessionPaymentQueryModel, SessionPaymentDTO>().ReverseMap();
             CreateMap<PaymentQueryModel, PaymentDTO>().ReverseMap();
 
             CreateProjection<PatientQueryModel, PatientSummaryDTO>()

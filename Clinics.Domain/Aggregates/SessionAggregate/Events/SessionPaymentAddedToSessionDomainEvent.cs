@@ -3,12 +3,12 @@ using Clinics.Domain.Aggregates.SessionAggregate.ValueObjects;
 
 namespace Clinics.Domain.Aggregates.SessionAggregate.Events
 {
-    internal record PaymentAddedToSessionDomainEvent : IDomainEvent
+    internal record SessionPaymentAddedToSessionDomainEvent : IDomainEvent
     {
         public SessionId SessionId { get; }
-        public PaymentId PaymentId { get; }
+        public SessionPaymentId PaymentId { get; }
 
-        public PaymentAddedToSessionDomainEvent(SessionId sessionId, PaymentId paymentId)
+        public SessionPaymentAddedToSessionDomainEvent(SessionId sessionId, SessionPaymentId paymentId)
         {
             SessionId = sessionId;
             PaymentId = paymentId;

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Clinics.API.Controllers
 {
-    public class SessionController : BaseAggregateRootController<SessionDTO, SessionSummaryDTO>
+    public class SessionController : BaseAggregateRootController<SessionDTO>
     {
         public SessionController(ICommandDispatcher commandDispatcher, IQueryDispatcher queryDispatcher) : base(commandDispatcher, queryDispatcher)
         {
@@ -29,7 +29,7 @@ namespace Clinics.API.Controllers
         }
 
         [HttpPost("Payment")]
-        public async Task<IActionResult> AddPaymentAsync([FromBody] AddPaymentToSessionCommand command)
+        public async Task<IActionResult> AddPaymentToSessionAsync([FromBody] AddPaymentToSessionCommand command)
         {
             await _commandDispatcher.DispatchAsync(command);
             return Ok();

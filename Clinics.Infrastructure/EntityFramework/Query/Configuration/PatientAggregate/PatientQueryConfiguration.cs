@@ -15,6 +15,9 @@ namespace Clinics.Infrastructure.EntityFramework.Query.Configuration.PatientAggr
 
             builder.HasMany(p => p.Sessions)
                 .WithOne(s => s.Patient);
+
+            builder.HasMany(p => p.Payments)
+                .WithOne(s => s.Patient);
         }
     }
 }

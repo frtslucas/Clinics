@@ -18,6 +18,11 @@ namespace Clinics.Domain.Shared
 
         private MoneyValue() { }
 
+        public static MoneyValue Zero { get => new(0); }
         public static MoneyValue FromDecimal(decimal value) => new(value);
+        public static MoneyValue Min(MoneyValue a, MoneyValue b) => new(Math.Min(a.Value, b.Value));
+
+        public static MoneyValue operator +(MoneyValue a, MoneyValue b) => new(a.Value + b.Value);
+        public static MoneyValue operator -(MoneyValue a, MoneyValue b) => new(a.Value - b.Value);
     }
 }

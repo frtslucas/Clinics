@@ -34,5 +34,6 @@ namespace Clinics.Application.DTOs
         public bool Active { get; set; }
 
         public IList<SessionDTO>? Sessions { get; set; }
+        public IList<PaymentDTO>? Payments { get; set; }
     }
 }

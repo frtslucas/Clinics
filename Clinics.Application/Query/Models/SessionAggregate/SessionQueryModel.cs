@@ -16,6 +16,6 @@ namespace Clinics.Application.Query.Models.SessionAggregate
         public bool Paid { get; set; }
         public decimal ToPay { get => Value - Payments.Sum(p => p.Value); }
 
-        public virtual IList<PaymentQueryModel> Payments { get; set; } = null!;
+        public virtual IList<SessionPaymentQueryModel> Payments { get; set; } = null!;
     }
 }

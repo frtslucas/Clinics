@@ -11,7 +11,7 @@ namespace Clinics.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PatientController : BaseAggregateRootController<PatientDTO, PatientSummaryDTO>
+    public class PatientController : BaseAggregateRootController<PatientDTO>
     {
         public PatientController(ICommandDispatcher commandDispatcher, IQueryDispatcher queryDispatcher) : base(commandDispatcher, queryDispatcher)
         {

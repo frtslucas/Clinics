@@ -6,14 +6,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Clinics.Infrastructure.EntityFramework.Command.Configuration.SessionAggregate
 {
-    internal sealed class PaymentCommandConfiguration : IEntityTypeConfiguration<Payment>
+    internal sealed class SessionPaymentCommandConfiguration : IEntityTypeConfiguration<SessionPayment>
     {
-        public void Configure(EntityTypeBuilder<Payment> builder)
+        public void Configure(EntityTypeBuilder<SessionPayment> builder)
         {
-            builder.ToTable(nameof(Payment));
+            builder.ToTable(nameof(SessionPayment));
 
             builder.HasKey(p => p.Id);
-            builder.Property(p => p.Id).HasConversion(id => id.Value, guid => PaymentId.FromGuid(guid));
+            builder.Property(p => p.Id).HasConversion(id => id.Value, guid => SessionPaymentId.FromGuid(guid));
 
             builder.OwnsOne(p => p.MoneyValue, mv =>
             {

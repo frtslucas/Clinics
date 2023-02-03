@@ -7,9 +7,8 @@ namespace Clinics.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public abstract class BaseAggregateRootController<TDTO, TSummaryDTO> : ControllerBase
+    public abstract class BaseAggregateRootController<TDTO> : ControllerBase
         where TDTO : IAggregateRootDTO
-        where TSummaryDTO : ISummaryDTO
     {
         protected readonly ICommandDispatcher _commandDispatcher;
         protected readonly IQueryDispatcher _queryDispatcher;

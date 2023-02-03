@@ -3,7 +3,7 @@ using Clinics.Application.Abstractions.Interfaces;
 
 namespace Clinics.Application.Query.Models.SessionAggregate
 {
-    public class PaymentQueryModel : BaseQueryModel, IQueryModel
+    public class SessionPaymentQueryModel : BaseQueryModel, IQueryModel
     {
         public Guid SessionId { get; set; }
         public virtual SessionQueryModel? Session { get; set; }

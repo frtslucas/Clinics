@@ -1,5 +1,6 @@
 ﻿using Clinics.Application.Abstractions;
 using Clinics.Application.Abstractions.Interfaces;
+using Clinics.Application.Query.Models.PaymentAggregate;
 using Clinics.Application.Query.Models.SessionAggregate;
 
 namespace Clinics.Application.Query.Models.PatientAggregate
@@ -36,5 +37,6 @@ namespace Clinics.Application.Query.Models.PatientAggregate
         public bool Active { get; set; }
 
         public virtual IList<SessionQueryModel> Sessions { get; set; } = null!;
+        public virtual IList<PaymentQueryModel> Payments { get; set; } = null!;
     }
 }
