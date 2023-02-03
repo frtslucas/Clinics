@@ -7,7 +7,11 @@ namespace Clinics.Infrastructure.EntityFramework.Query.QueryProviders
 {
     internal sealed class PatientQueryProvider : BaseQueryProvider<PatientQueryModel>, IQueryProvider<PatientQueryModel>, IPatientQueryProvider
     {
-        public PatientQueryProvider(QueryDbContext dbContext) : base(dbContext.Patients, dbContext.Patients.Include(p => p.Sessions).ThenInclude(s => s.Payments))
+        public PatientQueryProvider(QueryDbContext dbContext) : base(
+            dbContext.Patients, 
+            dbContext.Patients
+                .Include(p => p.Sessions.OrderBy(s => s.Date)).ThenInclude(s => s.Payments)
+                .Include(p => p.Payments.OrderBy(p => p.Date)))
         {
         }
     }
