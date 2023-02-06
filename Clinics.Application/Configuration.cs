@@ -11,6 +11,7 @@ using Clinics.Application.Command.SetAgreedValue;
 using Clinics.Application.DTOs;
 using Clinics.Application.Query.GetAll;
 using Clinics.Application.Query.GetById;
+using Clinics.Application.Query.GetPatientMonthlySummaries;
 using Clinics.Application.Query.GetPatientSummaries;
 using Clinics.Application.Query.GetSessionSummaries;
 using Clinics.Application.Query.Models.PatientAggregate;
@@ -48,6 +49,7 @@ namespace Clinics.Application
             services.AddQueryHandlers<SessionQueryModel, SessionDTO>();
             services.AddQueryHandlers<PaymentQueryModel, PaymentDTO>();
             services.AddQueryHandler<GetPatientSummariesQuery, IEnumerable<PatientSummaryDTO>, GetPatientSummariesQueryHandler>();
+            services.AddQueryHandler<GetPatientMonthlySummariesQuery, IEnumerable<PatientMonthlySummaryDTO>, GetPatientMonthlySummariesQueryHandler>();
             services.AddQueryHandler<GetSessionSummariesQuery, IEnumerable<SessionSummaryDTO>, GetSessionSummariesQueryHandler>();
 
             return services;

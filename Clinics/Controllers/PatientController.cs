@@ -4,6 +4,7 @@ using Clinics.Application.Command.ReactivatePatient;
 using Clinics.Application.Command.RegisterPatient;
 using Clinics.Application.Command.SetAgreedValue;
 using Clinics.Application.Query.GetPatientSummaries;
+using Clinics.Application.Query.GetPatientMonthlySummaries;
 using Clinics.Application.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,9 +19,16 @@ namespace Clinics.API.Controllers
         }
 
         [HttpGet("Summaries")]
-        public async Task<ActionResult<IEnumerable<PatientSummaryDTO>>> GetPatientSummariesByMonthAsync([FromQuery] GetPatientSummariesQuery query)
+        public async Task<ActionResult<IEnumerable<PatientSummaryDTO>>> GetPatientMonthlySummariesAsync([FromQuery] GetPatientSummariesQuery query)
         {
             var result = await _queryDispatcher.QueryAsync<GetPatientSummariesQuery, IEnumerable<PatientSummaryDTO>>(query);
+            return Ok(result);
+        }
+
+        [HttpGet("MonthlySummaries")]
+        public async Task<ActionResult<IEnumerable<PatientSummaryDTO>>> GetPatientSummariesAsync([FromQuery] GetPatientMonthlySummariesQuery query)
+        {
+            var result = await _queryDispatcher.QueryAsync<GetPatientMonthlySummariesQuery, IEnumerable<PatientMonthlySummaryDTO>>(query);
             return Ok(result);
         }
 

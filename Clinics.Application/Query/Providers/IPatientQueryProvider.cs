@@ -5,5 +5,6 @@ namespace Clinics.Application.Query.Providers
 {
     public interface IPatientQueryProvider : IQueryProvider<PatientQueryModel>
     {
+        Task<IQueryable<PatientQueryModel>> GetAllPatientsWithSessionsAndPaymentsFilteredByYearAndMonthAsync(int year, int month);
     }
 }
