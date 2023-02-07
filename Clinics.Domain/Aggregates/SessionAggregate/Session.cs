@@ -34,12 +34,11 @@ namespace Clinics.Domain.Aggregates.SessionAggregate
             AddDomainEvent(new SessionCreatedDomainEvent(this));
         }
 
-        public void MarkAsDone(SessionPayment? payment = null)
+        public void MarkAsDone()
         {
             Done = true;
 
-            if (payment is not null)
-                AddPayment(payment);
+            AddDomainEvent(new SessionDoneDomainEvent(PatientId, Id));
         }
 
         public void AddPayment(MoneyValue moneyValue, DateTime dateTime)
@@ -55,9 +54,9 @@ namespace Clinics.Domain.Aggregates.SessionAggregate
 
             _payments.Add(payment);
 
-            Paid = _payments.Sum(a => a.MoneyValue.Value) == MoneyValue.Value;
-
             AddDomainEvent(new SessionPaymentAddedToSessionDomainEvent(Id, payment.Id));
+
+            Paid = _payments.Sum(a => a.MoneyValue.Value) == MoneyValue.Value;
 
             if (Paid)
                 AddDomainEvent(new SessionPaidDomainEvent(Id));
