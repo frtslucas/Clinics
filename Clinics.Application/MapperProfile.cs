@@ -20,8 +20,7 @@ namespace Clinics.Application
 
             CreateProjection<PatientQueryModel, PatientMonthlySummaryDTO>()
                 .ForMember(a => a.Initials, opts => opts.MapFrom(b => b.Name.GetInitials()))
-                .ForMember(a => a.ActualMonthSessions, opts => opts.MapFrom(b =>
-                    (byte)b.Sessions.Count(s => s.Done)));
+                .ForMember(a => a.ActualMonthSessions, opts => opts.MapFrom(b => (byte)b.Sessions.Count(s => s.Done)));
 
             CreateProjection<SessionQueryModel, SessionSummaryDTO>()
                 .ForMember(a => a.PatientInitials, opts => opts.MapFrom(b => b.Patient != null ? b.Patient.Name.GetInitials() : string.Empty))
