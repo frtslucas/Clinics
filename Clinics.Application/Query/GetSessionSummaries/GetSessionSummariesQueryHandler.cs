@@ -8,18 +8,18 @@ namespace Clinics.Application.Query.GetSessionSummaries
 {
     internal sealed class GetSessionSummariesQueryHandler : IQueryHandler<GetSessionSummariesQuery, IEnumerable<SessionSummaryDTO>>
     {
-        private readonly IQueryProvider<SessionQueryModel> _queryProvider;
+        private readonly IQueryRepository<SessionQueryModel> _queryRepository;
         private readonly IMapper _mapper;
 
-        public GetSessionSummariesQueryHandler(IQueryProvider<SessionQueryModel> queryProvider, IMapper mapper)
+        public GetSessionSummariesQueryHandler(IQueryRepository<SessionQueryModel> queryRepository, IMapper mapper)
         {
-            _queryProvider = queryProvider;
+            _queryRepository = queryRepository;
             _mapper = mapper;
         }
 
         public async Task<IEnumerable<SessionSummaryDTO>?> HandleAsync(GetSessionSummariesQuery query)
         {
-            return (await _queryProvider.GetAllAsync(a => a.Date.Year == query.Year && a.Date.Month == query.Month))
+            return (await _queryRepository.GetAllAsync(a => a.Date.Year == query.Year && a.Date.Month == query.Month))
                 .ProjectTo<SessionSummaryDTO>(_mapper.ConfigurationProvider).ToList();
         }
     }

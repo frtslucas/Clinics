@@ -2,12 +2,12 @@
 
 namespace Clinics.Application.Abstractions.Interfaces
 {
-    public interface IQueryProvider<TQueryModel> : IQueryProvider<TQueryModel, Guid>
+    public interface IQueryRepository<TQueryModel> : IQueryRepository<TQueryModel, Guid>
         where TQueryModel : class, IQueryModel
     {
     }
 
-    public interface IQueryProvider<TQueryModel, TIdType>
+    public interface IQueryRepository<TQueryModel, TIdType>
         where TQueryModel : class, IQueryModel
     {
         Task<TQueryModel?> GetByIdAsync(TIdType id);

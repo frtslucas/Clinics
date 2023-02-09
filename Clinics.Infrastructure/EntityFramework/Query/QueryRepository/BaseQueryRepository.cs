@@ -2,15 +2,15 @@
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace Clinics.Infrastructure.EntityFramework.Query.QueryProviders
+namespace Clinics.Infrastructure.EntityFramework.Query.QueryRepository
 {
-    internal abstract class BaseQueryProvider<TQueryModel> : IQueryProvider<TQueryModel>
+    internal abstract class BaseQueryRepository<TQueryModel> : IQueryRepository<TQueryModel>
         where TQueryModel : class, IQueryModel
     {
         protected readonly DbSet<TQueryModel> _dbSet;
         protected readonly IQueryable<TQueryModel> _dbSetWithInclude;
 
-        public BaseQueryProvider(DbSet<TQueryModel> dbSet, IQueryable<TQueryModel> dbSetWithInclude)
+        public BaseQueryRepository(DbSet<TQueryModel> dbSet, IQueryable<TQueryModel> dbSetWithInclude)
         {
             _dbSet = dbSet;
             _dbSetWithInclude = dbSetWithInclude;

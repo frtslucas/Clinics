@@ -1,14 +1,14 @@
 ﻿using Clinics.Application.Abstractions.Interfaces;
 using Clinics.Application.Query.Models.PatientAggregate;
-using Clinics.Application.Query.Providers;
+using Clinics.Application.Query.Repository;
 using Microsoft.EntityFrameworkCore;
 
-namespace Clinics.Infrastructure.EntityFramework.Query.QueryProviders
+namespace Clinics.Infrastructure.EntityFramework.Query.QueryRepository
 {
-    internal sealed class PatientQueryProvider : BaseQueryProvider<PatientQueryModel>, IQueryProvider<PatientQueryModel>, IPatientQueryProvider
+    internal sealed class PatientQueryRepository : BaseQueryRepository<PatientQueryModel>, IQueryRepository<PatientQueryModel>, IPatientQueryRepository
     {
-        public PatientQueryProvider(QueryDbContext dbContext) : base(
-            dbContext.Patients, 
+        public PatientQueryRepository(QueryDbContext dbContext) : base(
+            dbContext.Patients,
             dbContext.Patients
                 .Include(p => p.Sessions.OrderBy(s => s.Date)).ThenInclude(s => s.Payments)
                 .Include(p => p.Payments.OrderBy(p => p.Date)))

@@ -1,9 +1,9 @@
 ﻿using Clinics.Application.Abstractions.Interfaces;
 using Clinics.Application.Query.Models.PatientAggregate;
 
-namespace Clinics.Application.Query.Providers
+namespace Clinics.Application.Query.Repository
 {
-    public interface IPatientQueryProvider : IQueryProvider<PatientQueryModel>
+    public interface IPatientQueryRepository : IQueryRepository<PatientQueryModel>
     {
         Task<IQueryable<PatientQueryModel>> GetAllPatientsWithSessionsAndPaymentsFilteredByYearAndMonthAsync(int year, int month);
     }

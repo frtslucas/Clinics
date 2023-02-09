@@ -2,7 +2,7 @@
 using Clinics.Application.Query.Models.PatientAggregate;
 using Clinics.Application.Query.Models.PaymentAggregate;
 using Clinics.Application.Query.Models.SessionAggregate;
-using Clinics.Application.Query.Providers;
+using Clinics.Application.Query.Repository;
 using Clinics.Domain.Abstractions.Interfaces;
 using Clinics.Domain.Aggregates.PatientAggregate;
 using Clinics.Domain.Aggregates.PatientAggregate.ValueObjects;
@@ -13,7 +13,7 @@ using Clinics.Domain.Aggregates.SessionAggregate.ValueObjects;
 using Clinics.Infrastructure.EntityFramework.Command;
 using Clinics.Infrastructure.EntityFramework.Command.Repositories;
 using Clinics.Infrastructure.EntityFramework.Query;
-using Clinics.Infrastructure.EntityFramework.Query.QueryProviders;
+using Clinics.Infrastructure.EntityFramework.Query.QueryRepository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -37,12 +37,12 @@ namespace Clinics.Infrastructure
             services.AddScoped<IRepository<Session, SessionId>, SessionRepository>();
             services.AddScoped<IRepository<Payment, PaymentId>, PaymentRepository>();
 
-            services.AddScoped<IPatientQueryProvider, PatientQueryProvider>();
-            services.AddScoped<ISessionQueryProvider, SessionQueryProvider>();
-            services.AddScoped<IPaymentQueryProvider, PaymentQueryProvider>();
-            services.AddScoped<IQueryProvider<PatientQueryModel>, PatientQueryProvider>();
-            services.AddScoped<IQueryProvider<SessionQueryModel>, SessionQueryProvider>();
-            services.AddScoped<IQueryProvider<PaymentQueryModel>, PaymentQueryProvider>();
+            services.AddScoped<IPatientQueryRepository, PatientQueryRepository>();
+            services.AddScoped<ISessionQueryRepository, SessionQueryRepository>();
+            services.AddScoped<IPaymentQueryRepository, PaymentQueryRepository>();
+            services.AddScoped<IQueryRepository<PatientQueryModel>, PatientQueryRepository>();
+            services.AddScoped<IQueryRepository<SessionQueryModel>, SessionQueryRepository>();
+            services.AddScoped<IQueryRepository<PaymentQueryModel>, PaymentQueryRepository>();
 
             return services;
         }

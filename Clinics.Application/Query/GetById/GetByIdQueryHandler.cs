@@ -7,18 +7,18 @@ namespace Clinics.Application.Query.GetById
         where TQueryModel : class, IQueryModel
         where TDTO : class, IAggregateRootDTO
     {
-        private readonly IQueryProvider<TQueryModel> _queryProvider;
+        private readonly IQueryRepository<TQueryModel> _queryRepository;
         private readonly IMapper _mapper;
 
-        public GetByIdQueryHandler(IQueryProvider<TQueryModel> queryProvider, IMapper mapper)
+        public GetByIdQueryHandler(IQueryRepository<TQueryModel> queryRepository, IMapper mapper)
         {
-            _queryProvider = queryProvider;
+            _queryRepository = queryRepository;
             _mapper = mapper;
         }
 
         public async Task<TDTO?> HandleAsync(GetByIdQuery<TDTO> query)
         {
-            var queryModel = await _queryProvider.GetByIdAsync(query.Id);
+            var queryModel = await _queryRepository.GetByIdAsync(query.Id);
             return _mapper.Map<TDTO>(queryModel);
         }
     }
