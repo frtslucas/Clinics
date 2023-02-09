@@ -19,14 +19,14 @@ namespace Clinics.API.Controllers
         }
 
         [HttpGet("Summaries")]
-        public async Task<ActionResult<IEnumerable<PatientSummaryDTO>>> GetPatientMonthlySummariesAsync([FromQuery] GetPatientSummariesQuery query)
+        public async Task<ActionResult<IEnumerable<PatientSummaryDTO>>> GetPatientSummariesAsync([FromQuery] GetPatientSummariesQuery query)
         {
             var result = await _queryDispatcher.QueryAsync<GetPatientSummariesQuery, IEnumerable<PatientSummaryDTO>>(query);
             return Ok(result);
         }
 
         [HttpGet("MonthlySummaries")]
-        public async Task<ActionResult<IEnumerable<PatientSummaryDTO>>> GetPatientSummariesAsync([FromQuery] GetPatientMonthlySummariesQuery query)
+        public async Task<ActionResult<IEnumerable<PatientSummaryDTO>>> GetPatientMonthlySummariesAsync([FromQuery] GetPatientMonthlySummariesQuery query)
         {
             var result = await _queryDispatcher.QueryAsync<GetPatientMonthlySummariesQuery, IEnumerable<PatientMonthlySummaryDTO>>(query);
             return Ok(result);
