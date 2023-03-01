@@ -6,7 +6,7 @@ using Clinics.Domain.Shared;
 
 namespace Clinics.Application.Command.RegisterPatient
 {
-    internal sealed class RegisterPatientCommandHandler : ICommandHandler<RegisterPatientCommand>
+    internal sealed class RegisterPatientCommandHandler : ICommandHandler<RegisterPatientCommand, Patient>
     {
         private readonly IPatientRepository _patientRepository;
 
@@ -15,9 +15,8 @@ namespace Clinics.Application.Command.RegisterPatient
             _patientRepository = patientRepository;
         }
 
-        public async Task<Result> HandleAsync(RegisterPatientCommand command)
+        public async Task<Result<Patient>> HandleAsync(RegisterPatientCommand command)
         {
-            var id = PatientId.FromGuid(command.Id);
             var name = Name.FromString(command.Name);
             var occupation = Occupation.FromString(command.Occupation);
             var age = Age.FromDateTime(command.BirthDate);
@@ -31,7 +30,7 @@ namespace Clinics.Application.Command.RegisterPatient
 
             await _patientRepository.AddAsync(patient);
 
-            return Result.Success;
+            return Result<Patient>.SuccessWithValue(patient);
         }
     }
 }

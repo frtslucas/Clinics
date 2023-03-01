@@ -7,7 +7,7 @@ using Clinics.Domain.Aggregates.SessionAggregate.ValueObjects;
 
 namespace Clinics.Application.Command.AddSessionToPatient
 {
-    internal sealed class AddSessionToPatientCommandHandler : ICommandHandler<AddSessionToPatientCommand>
+    internal sealed class AddSessionToPatientCommandHandler : ICommandHandler<AddSessionToPatientCommand, Session>
     {
         private readonly IPatientRepository _patientRepository;
         private readonly ISessionRepository _sessionRepository;
@@ -18,18 +18,18 @@ namespace Clinics.Application.Command.AddSessionToPatient
             _sessionRepository = sessionRepository;
         }
 
-        public async Task<Result> HandleAsync(AddSessionToPatientCommand command)
+        public async Task<Result<Session>> HandleAsync(AddSessionToPatientCommand command)
         {
             var patient = await _patientRepository.FindByIdAsync(PatientId.FromGuid(command.PatientId));
 
             if (patient is null)
-                return Result.Fail(Error.NotFound);
+                return Result<Session>.Fail(Error.NotFound);
 
             var session = new Session(patient, command.Date, command.Observations);
 
             await _sessionRepository.AddAsync(session);
 
-            return Result.Success;
+            return Result<Session>.SuccessWithValue(session);
         }
     }
 }

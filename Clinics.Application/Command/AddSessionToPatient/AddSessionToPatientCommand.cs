@@ -1,10 +1,10 @@
 ﻿using Clinics.Application.Abstractions.Interfaces;
+using Clinics.Domain.Aggregates.SessionAggregate;
 
 namespace Clinics.Application.Command.AddSessionToPatient
 {
-    public record AddSessionToPatientCommand : ICreateCommand
+    public record AddSessionToPatientCommand : ICommand<Session>
     {
-        public Guid Id { get; set; }
         public Guid PatientId { get; set; }
         public DateTime Date { get; set; }
         public string? Observations { get; set; }

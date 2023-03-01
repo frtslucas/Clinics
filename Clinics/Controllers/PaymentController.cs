@@ -1,6 +1,7 @@
 ﻿using Clinics.Application.Abstractions.Interfaces;
 using Clinics.Application.Command.ProcessPatientPayment;
 using Clinics.Application.DTOs;
+using Clinics.Domain.Aggregates.PaymentAggregate;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Clinics.API.Controllers
@@ -16,8 +17,12 @@ namespace Clinics.API.Controllers
         [HttpPost]
         public async Task<IActionResult> ProcessPatientPaymentAsync([FromBody] ProcessPatientPaymentCommand command)
         {
-            await _commandDispatcher.DispatchAsync(command);
-            return CreatedAtAction(nameof(GetByIdAsync), new { id = command.Id }, null);
+            var result = await _commandDispatcher.DispatchAsync<ProcessPatientPaymentCommand, Payment>(command);
+
+            if (!result.IsValid)
+                return BadRequest(result.Message);
+
+            return CreatedAtAction(nameof(GetByIdAsync), new { id = result.ReturnValue.Id }, null);
         }
     }
 }

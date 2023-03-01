@@ -25,6 +25,7 @@ namespace Clinics.Domain.Aggregates.SessionAggregate
         public IReadOnlyList<SessionPayment> Payments => _payments.AsReadOnly();
 
         public Session(Patient patient, DateTime date, string? observations) 
+            : base()
         {
             if (!patient.Active)
                 throw new InactivePacientException();
@@ -66,17 +67,6 @@ namespace Clinics.Domain.Aggregates.SessionAggregate
 
             if (Paid)
                 AddDomainEvent(new SessionPaidDomainEvent(Id));
-        }
-
-        public static Session Create(SessionId sessionId, Patient patient, DateTime date, string? observations)
-        {
-            if (!patient.Active)
-                throw new InactivePacientException();
-
-            if (patient.AgreedValue is null)
-                throw new AgreedValueNotSetException(patient.Name);
-
-            return new(sessionId, patient.Id, patient.AgreedValue, date, observations);
         }
 
         #region EF

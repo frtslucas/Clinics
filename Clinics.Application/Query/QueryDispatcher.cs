@@ -1,7 +1,7 @@
 ﻿using Clinics.Application.Abstractions.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Clinics.Application.Abstractions
+namespace Clinics.Application.Query
 {
     internal sealed class QueryDispatcher : IQueryDispatcher
     {

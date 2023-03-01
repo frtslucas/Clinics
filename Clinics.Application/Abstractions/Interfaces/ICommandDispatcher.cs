@@ -2,7 +2,10 @@
 {
     public interface ICommandDispatcher
     {
-        Task DispatchAsync<TCommand>(TCommand command)
+        Task<Result> DispatchAsync<TCommand>(TCommand command)
             where TCommand : ICommand;
+
+        Task<Result<TResult>> DispatchAsync<TCommand, TResult>(TCommand command)
+            where TCommand : ICommand<TResult>;
     }
 }

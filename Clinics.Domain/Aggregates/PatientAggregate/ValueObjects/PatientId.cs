@@ -3,7 +3,7 @@ using Clinics.Domain.Abstractions.ValueObjects;
 
 namespace Clinics.Domain.Aggregates.PatientAggregate.ValueObjects
 {
-    public record PatientId : GuidIdentifier, IIdentifier<Guid>
+    public record PatientId : GuidIdentifier, IIdentifier
     {
         public PatientId() : base()
         {

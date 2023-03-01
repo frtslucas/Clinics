@@ -3,7 +3,7 @@ using Clinics.Domain.Exceptions;
 
 namespace Clinics.Domain.Abstractions.ValueObjects
 {
-    public abstract record GuidIdentifier : ValueObject, IIdentifier<Guid>, IValueObject
+    public abstract record GuidIdentifier : ValueObject, IIdentifier, IValueObject
     {
         public Guid Value { get; }
 

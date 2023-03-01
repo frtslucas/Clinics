@@ -5,6 +5,7 @@ using Clinics.Application.Command.RegisterPatient;
 using Clinics.Application.Command.SetAgreedValue;
 using Clinics.Application.Query.GetPatientSummaries;
 using Clinics.Application.Query.GetPatientMonthlySummaries;
+using Clinics.Domain.Aggregates.PatientAggregate;
 using Clinics.Application.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,28 +36,44 @@ namespace Clinics.API.Controllers
         [HttpPost]
         public async Task<IActionResult> RegisterPatientAsync([FromBody] RegisterPatientCommand command)
         {
-            await _commandDispatcher.DispatchAsync(command);
-            return CreatedAtAction(nameof(GetByIdAsync), new { id = command.Id }, null);
+            var result = await _commandDispatcher.DispatchAsync<RegisterPatientCommand, Patient>(command);
+
+            if (!result.IsValid)
+                return BadRequest(result.Message);
+
+            return CreatedAtAction(nameof(GetByIdAsync), new { id = result.ReturnValue.Id }, null);
         }
 
         [HttpPut("AgreedValue")]
         public async Task<IActionResult> SetAgreedValueAsync([FromBody] SetAgreedValueCommand command)
         {
-            await _commandDispatcher.DispatchAsync(command);
+            var result = await _commandDispatcher.DispatchAsync(command);
+
+            if (!result.IsValid)
+                return BadRequest(result.Message);
+
             return Ok();
         }
 
         [HttpPut("Inactivate")]
         public async Task<IActionResult> InactivatePatientAsync([FromBody] InactivatePatientCommand command)
         {
-            await _commandDispatcher.DispatchAsync(command);
+            var result = await _commandDispatcher.DispatchAsync(command);
+            
+            if (!result.IsValid)
+                return BadRequest(result.Message);
+
             return Ok();
         }
 
         [HttpPut("Reactivate")]
         public async Task<IActionResult> ReactivatePatientAsync([FromBody] ReactivatePatientCommand command)
         {
-            await _commandDispatcher.DispatchAsync(command);
+            var result = await _commandDispatcher.DispatchAsync(command);
+            
+            if (!result.IsValid)
+                return BadRequest(result.Message);
+
             return Ok();
         }
     }

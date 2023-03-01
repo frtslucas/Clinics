@@ -1,10 +1,10 @@
 ﻿using Clinics.Application.Abstractions.Interfaces;
+using Clinics.Domain.Aggregates.PatientAggregate;
 
 namespace Clinics.Application.Command.RegisterPatient
 {
-    public record RegisterPatientCommand : ICreateCommand
+    public record RegisterPatientCommand : ICommand<Patient>
     {
-        public Guid Id { get; set; } = default!;
         public string Name { get; set; } = null!;
         public DateTime BirthDate { get; set; } = default!;
         public string Occupation { get; set; } = null!;

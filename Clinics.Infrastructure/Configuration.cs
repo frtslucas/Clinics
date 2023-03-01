@@ -21,30 +21,66 @@ namespace Clinics.Infrastructure
 {
     public static class Configuration
     {
-        private const string sqlConnectinString = "Server=(localdb)\\MSSQLLocalDB;Database=Clinics;Trusted_Connection=True;MultipleActiveResultSets=true";
-        private const string sqlConnectinStringReadOnly = $"{sqlConnectinString};ApplicationIntent=ReadOnly";
+        private const string _sqlConnectinString = "Server=(localdb)\\MSSQLLocalDB;Database=Clinics;Trusted_Connection=True;MultipleActiveResultSets=true";
+        private const string _sqlConnectinStringReadOnly = $"{_sqlConnectinString};ApplicationIntent=ReadOnly";
 
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
-            services.AddDbContext<CommandDbContext>(options => options.UseSqlServer(sqlConnectinString));
-            services.AddDbContext<QueryDbContext>(options => options.UseSqlServer(sqlConnectinStringReadOnly));
+            services.AddDbContext<CommandDbContext>(options => options.UseSqlServer(_sqlConnectinString));
+            services.AddDbContext<QueryDbContext>(options => options.UseSqlServer(_sqlConnectinStringReadOnly));
             services.AddScoped<IUnityOfWork, UnityOfWork>();
 
-            services.AddScoped<IPatientRepository, PatientRepository>();
-            services.AddScoped<ISessionRepository, SessionRepository>();
-            services.AddScoped<IPaymentRepository, PaymentRepository>();
-            services.AddScoped<IRepository<Patient, PatientId>, PatientRepository>();
-            services.AddScoped<IRepository<Session, SessionId>, SessionRepository>();
-            services.AddScoped<IRepository<Payment, PaymentId>, PaymentRepository>();
+            services.AddRepository<Patient, PatientId, IPatientRepository, PatientRepository>();
+            services.AddRepository<Session, SessionId, ISessionRepository, SessionRepository>();
+            services.AddRepository<Payment, PaymentId, IPaymentRepository, PaymentRepository>();
 
-            services.AddScoped<IPatientQueryRepository, PatientQueryRepository>();
-            services.AddScoped<ISessionQueryRepository, SessionQueryRepository>();
-            services.AddScoped<IPaymentQueryRepository, PaymentQueryRepository>();
-            services.AddScoped<IQueryRepository<PatientQueryModel>, PatientQueryRepository>();
-            services.AddScoped<IQueryRepository<SessionQueryModel>, SessionQueryRepository>();
-            services.AddScoped<IQueryRepository<PaymentQueryModel>, PaymentQueryRepository>();
+            services.AddQueryRepository<PatientQueryModel, IPatientQueryRepository, PatientQueryRepository>();
+            services.AddQueryRepository<SessionQueryModel, ISessionQueryRepository, SessionQueryRepository>();
+            services.AddQueryRepository<PaymentQueryModel, IPaymentQueryRepository, PaymentQueryRepository>();
 
             return services;
+        }
+
+        private static void AddRepository<TAggregateRoot, TIdentifier, TInterface, TClass>(this IServiceCollection services)
+            where TAggregateRoot : class, IAggregateRoot<TIdentifier>
+            where TIdentifier : IIdentifier, new()
+            where TInterface : class, IRepository<TAggregateRoot, TIdentifier>
+            where TClass : class, TInterface
+        {
+            services.AddScoped<TInterface, TClass>();
+            services.AddScoped<IRepository<TAggregateRoot, TIdentifier>, TClass>();
+
+            services.AddRepository<TAggregateRoot, TIdentifier, Guid, TInterface, TClass>();
+        }
+
+        private static void AddRepository<TAggregateRoot, TIdentifier, TIdType, TInterface, TClass>(this IServiceCollection services)
+            where TAggregateRoot : class, IAggregateRoot<TIdentifier, TIdType>
+            where TIdentifier : IIdentifier<TIdType>, new()
+            where TInterface : class, IRepository<TAggregateRoot, TIdentifier, TIdType>
+            where TClass : class, TInterface
+        {
+            services.AddScoped<TInterface, TClass>();
+            services.AddScoped<IRepository<TAggregateRoot, TIdentifier, TIdType>, TClass>();
+        }
+
+        private static void AddQueryRepository<TQueryModel, TInterface, TClass>(this IServiceCollection services)
+            where TQueryModel : class, IQueryModel
+            where TInterface : class, IQueryRepository<TQueryModel>
+            where TClass : class, TInterface
+        {
+            services.AddScoped<TInterface, TClass>();
+            services.AddScoped<IQueryRepository<TQueryModel>, TClass>();
+
+            services.AddQueryRepository<TQueryModel, Guid, TInterface, TClass>();
+        }
+
+        private static void AddQueryRepository<TQueryModel, TIdType, TInterface, TClass>(this IServiceCollection services)
+            where TQueryModel : class, IQueryModel
+            where TInterface : class, IQueryRepository<TQueryModel, TIdType>
+            where TClass : class, TInterface
+        {
+            services.AddScoped<TInterface, TClass>();
+            services.AddScoped<IQueryRepository<TQueryModel, TIdType>, TClass>();
         }
     }
 }

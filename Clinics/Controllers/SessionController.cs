@@ -4,7 +4,9 @@ using Clinics.Application.Command.AddSessionToPatient;
 using Clinics.Application.Command.MarkSessionAsDone;
 using Clinics.Application.Query.GetSessionSummaries;
 using Clinics.Application.DTOs;
+using Clinics.Domain.Aggregates.SessionAggregate;
 using Microsoft.AspNetCore.Mvc;
+using Clinics.Application.Query.GetById;
 
 namespace Clinics.API.Controllers
 {
@@ -24,14 +26,18 @@ namespace Clinics.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddSessionToPatientAsync([FromBody] AddSessionToPatientCommand command)
         {
-            await _commandDispatcher.DispatchAsync(command);
-            return CreatedAtAction(nameof(GetByIdAsync), new { id = command.Id }, null);
+            var result = await _commandDispatcher.DispatchAsync<AddSessionToPatientCommand, Session>(command);
+
+            if (!result.IsValid)
+                return BadRequest(result.Message);
+
+            return CreatedAtAction(nameof(GetByIdAsync), new GetByIdQuery<Session>() { Id = result.ReturnValue.Id.Value }, result.ReturnValue);
         }
 
         [HttpPost("Payment")]
         public async Task<IActionResult> AddPaymentToSessionAsync([FromBody] AddPaymentToSessionCommand command)
         {
-            await _commandDispatcher.DispatchAsync(command);
+            var result =  await _commandDispatcher.DispatchAsync(command);
             return Ok();
         }
 

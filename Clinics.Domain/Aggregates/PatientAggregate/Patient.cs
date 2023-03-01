@@ -21,7 +21,6 @@ namespace Clinics.Domain.Aggregates.PatientAggregate
         public bool Active { get; private set; } = true;
 
         public Patient(
-            PatientId id,
             Name name,
             Age age,
             Occupation occupation,
@@ -30,7 +29,7 @@ namespace Clinics.Domain.Aggregates.PatientAggregate
             RG? rG,
             CPF? cPF,
             Value agreedValue,
-            byte estimatedMonthSessions) : base(id)
+            byte estimatedMonthSessions) : base()
         {
             Name = name;
             Age = age;
