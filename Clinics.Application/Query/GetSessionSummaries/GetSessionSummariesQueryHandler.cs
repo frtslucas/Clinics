@@ -20,6 +20,7 @@ namespace Clinics.Application.Query.GetSessionSummaries
         public async Task<IEnumerable<SessionSummaryDTO>?> HandleAsync(GetSessionSummariesQuery query)
         {
             return (await _queryRepository.GetAllAsync(a => a.Date.Year == query.Year && a.Date.Month == query.Month))
+                .OrderBy(a => a.Date)
                 .ProjectTo<SessionSummaryDTO>(_mapper.ConfigurationProvider).ToList();
         }
     }

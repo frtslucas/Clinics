@@ -19,7 +19,8 @@ namespace Clinics.Application.Query.GetPatientMonthlySummaries
 
         public async Task<IEnumerable<PatientMonthlySummaryDTO>?> HandleAsync(GetPatientMonthlySummariesQuery query)
         {
-            var patients = (await _queryRepository.GetAllPatientsWithSessionsAndPaymentsFilteredByYearAndMonthAsync(query.Year, query.Month)).ToList();
+            var patients = (await _queryRepository.GetAllPatientsWithSessionsAndPaymentsFilteredByYearAndMonthAsync(query.Year, query.Month))
+                .OrderBy(a => a.Name).ToList();
 
             return patients.AsQueryable().ProjectTo<PatientMonthlySummaryDTO>(_mapper.ConfigurationProvider).ToList();
         }
