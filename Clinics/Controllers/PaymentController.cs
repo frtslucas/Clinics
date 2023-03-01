@@ -1,6 +1,7 @@
 ﻿using Clinics.Application.Abstractions.Interfaces;
 using Clinics.Application.Command.ProcessPatientPayment;
 using Clinics.Application.DTOs;
+using Clinics.Application.Query.GetById;
 using Clinics.Domain.Aggregates.PaymentAggregate;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,7 +23,7 @@ namespace Clinics.API.Controllers
             if (!result.IsValid)
                 return BadRequest(result.Message);
 
-            return CreatedAtAction(nameof(GetByIdAsync), new { id = result.ReturnValue.Id }, null);
+            return CreatedAtAction(nameof(GetByIdAsync), new GetByIdQuery<Payment> { Id = result.ReturnValue.Id.Value }, null);
         }
     }
 }

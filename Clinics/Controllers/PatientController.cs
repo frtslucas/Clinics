@@ -8,6 +8,7 @@ using Clinics.Application.Query.GetPatientMonthlySummaries;
 using Clinics.Domain.Aggregates.PatientAggregate;
 using Clinics.Application.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using Clinics.Application.Query.GetById;
 
 namespace Clinics.API.Controllers
 {
@@ -41,7 +42,7 @@ namespace Clinics.API.Controllers
             if (!result.IsValid)
                 return BadRequest(result.Message);
 
-            return CreatedAtAction(nameof(GetByIdAsync), new { id = result.ReturnValue.Id }, null);
+            return CreatedAtAction(nameof(GetByIdAsync), new GetByIdQuery<Patient> { Id = result.ReturnValue.Id.Value }, null);
         }
 
         [HttpPut("AgreedValue")]
