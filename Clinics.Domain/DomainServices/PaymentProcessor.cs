@@ -23,14 +23,14 @@ namespace Clinics.Domain.DomainServices
         {
             var sessionToPay = await _sessionRepository.GetUnpaidSessionsFromPatientAsync(payment.PatientId);
 
-            var remainingValue = payment.MoneyValue;
+            var remainingValue = payment.Value;
 
             foreach (var session in sessionToPay)
             {
-                if (remainingValue == MoneyValue.Zero)
+                if (remainingValue == Value.Zero)
                     break;
 
-                var paidValue = MoneyValue.Min(remainingValue, session.UnpaidValue);
+                var paidValue = Value.Min(remainingValue, session.UnpaidValue);
 
                 session.AddPayment(paidValue, payment.Date);
 

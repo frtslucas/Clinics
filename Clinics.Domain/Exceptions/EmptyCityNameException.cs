@@ -2,7 +2,7 @@
 
 namespace Clinics.Domain.Exceptions
 {
-    internal class EmptyCityNameException : CustomException
+    internal class EmptyCityNameException : DomainException
     {
         public EmptyCityNameException() : base("City Name cannot be empty")
         {

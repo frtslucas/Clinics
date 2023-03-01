@@ -35,7 +35,7 @@ namespace Clinics.Application.Command.ProcessPatientPayment
             if (!await _patientRepository.ExistsByIdAsync(patientId))
                 return Result.Fail(Error.NotFound);
 
-            var payment = new Payment(patientId, MoneyValue.FromDecimal(command.MoneyValue), command.Date);
+            var payment = new Payment(patientId, Value.FromDecimal(command.MoneyValue), command.Date);
             var updatedSessions = await _paymentProcessor.AssignPaymentToSessionsAsync(payment);
 
             await _sessionRepository.UpdateManyAsync(updatedSessions);

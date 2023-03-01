@@ -2,7 +2,7 @@
 
 namespace Clinics.Domain.Exceptions
 {
-    internal class InvalidStreetNumberException : CustomException
+    internal class InvalidStreetNumberException : DomainException
     {
         public InvalidStreetNumberException() : base("Invalid Street Number, must greater than zero")
         {

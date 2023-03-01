@@ -11,13 +11,13 @@ namespace Clinics.Domain.Aggregates.PaymentAggregate
     {
         public PatientId PatientId { get; init; }
 
-        public MoneyValue MoneyValue { get; private set; }
+        public Value Value { get; private set; }
         public DateTime Date { get; private set; }
 
-        public Payment(PatientId patientId, MoneyValue moneyValue, DateTime date)
+        public Payment(PatientId patientId, Value value, DateTime date)
         {
             PatientId = patientId;
-            MoneyValue = moneyValue;
+            Value = value;
             Date = date;
 
             AddDomainEvent(new PaymentCreatedDomainEvent(this));

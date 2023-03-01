@@ -2,7 +2,7 @@
 
 namespace Clinics.Domain.Exceptions
 {
-    internal class EmptyOccupationException : CustomException
+    internal class EmptyOccupationException : DomainException
     {
         public EmptyOccupationException() : base("Occupation cannot be empty")
         {

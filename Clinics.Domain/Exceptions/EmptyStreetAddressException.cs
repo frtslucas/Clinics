@@ -2,7 +2,7 @@
 
 namespace Clinics.Domain.Exceptions
 {
-    internal class EmptyStreetAddressException : CustomException
+    internal class EmptyStreetAddressException : DomainException
     {
         public EmptyStreetAddressException() : base("Street Address cannot be emtpy")
         {

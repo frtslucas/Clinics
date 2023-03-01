@@ -25,9 +25,9 @@ namespace Clinics.Application.Command.RegisterPatient
             var address = !string.IsNullOrWhiteSpace(command.City) ? new Address(command.StreetAddress, command.StreetNumber, command.ExtraLineAddress, command.City, command.State) : null;
             var rg = !string.IsNullOrWhiteSpace(command.RG) ? RG.FromString(command.RG) : null;
             var cpf = !string.IsNullOrWhiteSpace(command.CPF) ? CPF.FromString(command.CPF) : null;
-            var agreedValue = MoneyValue.FromDecimal(command.AgreedValue);
+            var agreedValue = Value.FromDecimal(command.AgreedValue);
 
-            var patient = new Patient(id, name, age, occupation, placeOfBirth, address, rg, cpf, agreedValue, command.EstimatedMonthSessions);
+            var patient = new Patient(name, age, occupation, placeOfBirth, address, rg, cpf, agreedValue, command.EstimatedMonthSessions);
 
             await _patientRepository.AddAsync(patient);
 

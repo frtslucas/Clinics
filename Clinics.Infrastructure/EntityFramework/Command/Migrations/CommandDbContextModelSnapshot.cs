@@ -113,25 +113,7 @@ namespace Clinics.Infrastructure.EntityFramework.Command.Migrations
 
             modelBuilder.Entity("Clinics.Domain.Aggregates.PatientAggregate.Patient", b =>
                 {
-                    b.OwnsOne("Clinics.Domain.Shared.MoneyValue", "AgreedValue", b1 =>
-                        {
-                            b1.Property<Guid>("PatientId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<decimal>("Value")
-                                .HasPrecision(18, 2)
-                                .HasColumnType("decimal(18,2)")
-                                .HasColumnName("AgreedValue");
-
-                            b1.HasKey("PatientId");
-
-                            b1.ToTable("Patient", "Clinics");
-
-                            b1.WithOwner()
-                                .HasForeignKey("PatientId");
-                        });
-
-                    b.OwnsOne("Clinics.Domain.Aggregates.PatientAggregate.ValueObjects.Address", "Address", b1 =>
+                    b.OwnsOne("Clinics.Domain.Aggregates.PatientAggregate.Patient.Address#Clinics.Domain.Aggregates.PatientAggregate.ValueObjects.Address", "Address", b1 =>
                         {
                             b1.Property<Guid>("PatientId")
                                 .HasColumnType("uniqueidentifier");
@@ -155,7 +137,7 @@ namespace Clinics.Infrastructure.EntityFramework.Command.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("PatientId");
 
-                            b1.OwnsOne("Clinics.Domain.Aggregates.PatientAggregate.ValueObjects.City", "City", b2 =>
+                            b1.OwnsOne("Clinics.Domain.Aggregates.PatientAggregate.Patient.Address#Clinics.Domain.Aggregates.PatientAggregate.ValueObjects.Address.City#Clinics.Domain.Aggregates.PatientAggregate.ValueObjects.City", "City", b2 =>
                                 {
                                     b2.Property<Guid>("AddressPatientId")
                                         .HasColumnType("uniqueidentifier");
@@ -180,7 +162,7 @@ namespace Clinics.Infrastructure.EntityFramework.Command.Migrations
                                 .IsRequired();
                         });
 
-                    b.OwnsOne("Clinics.Domain.Aggregates.PatientAggregate.ValueObjects.Age", "Age", b1 =>
+                    b.OwnsOne("Clinics.Domain.Aggregates.PatientAggregate.Patient.Age#Clinics.Domain.Aggregates.PatientAggregate.ValueObjects.Age", "Age", b1 =>
                         {
                             b1.Property<Guid>("PatientId")
                                 .HasColumnType("uniqueidentifier");
@@ -197,7 +179,25 @@ namespace Clinics.Infrastructure.EntityFramework.Command.Migrations
                                 .HasForeignKey("PatientId");
                         });
 
-                    b.OwnsOne("Clinics.Domain.Aggregates.PatientAggregate.ValueObjects.CPF", "CPF", b1 =>
+                    b.OwnsOne("Clinics.Domain.Aggregates.PatientAggregate.Patient.AgreedValue#Clinics.Domain.Shared.MoneyValue", "AgreedValue", b1 =>
+                        {
+                            b1.Property<Guid>("PatientId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(18, 2)
+                                .HasColumnType("decimal(18,2)")
+                                .HasColumnName("AgreedValue");
+
+                            b1.HasKey("PatientId");
+
+                            b1.ToTable("Patient", "Clinics");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PatientId");
+                        });
+
+                    b.OwnsOne("Clinics.Domain.Aggregates.PatientAggregate.Patient.CPF#Clinics.Domain.Aggregates.PatientAggregate.ValueObjects.CPF", "CPF", b1 =>
                         {
                             b1.Property<Guid>("PatientId")
                                 .HasColumnType("uniqueidentifier");
@@ -214,7 +214,7 @@ namespace Clinics.Infrastructure.EntityFramework.Command.Migrations
                                 .HasForeignKey("PatientId");
                         });
 
-                    b.OwnsOne("Clinics.Domain.Aggregates.PatientAggregate.ValueObjects.Name", "Name", b1 =>
+                    b.OwnsOne("Clinics.Domain.Aggregates.PatientAggregate.Patient.Name#Clinics.Domain.Aggregates.PatientAggregate.ValueObjects.Name", "Name", b1 =>
                         {
                             b1.Property<Guid>("PatientId")
                                 .HasColumnType("uniqueidentifier");
@@ -232,7 +232,7 @@ namespace Clinics.Infrastructure.EntityFramework.Command.Migrations
                                 .HasForeignKey("PatientId");
                         });
 
-                    b.OwnsOne("Clinics.Domain.Aggregates.PatientAggregate.ValueObjects.Occupation", "Occupation", b1 =>
+                    b.OwnsOne("Clinics.Domain.Aggregates.PatientAggregate.Patient.Occupation#Clinics.Domain.Aggregates.PatientAggregate.ValueObjects.Occupation", "Occupation", b1 =>
                         {
                             b1.Property<Guid>("PatientId")
                                 .HasColumnType("uniqueidentifier");
@@ -250,7 +250,7 @@ namespace Clinics.Infrastructure.EntityFramework.Command.Migrations
                                 .HasForeignKey("PatientId");
                         });
 
-                    b.OwnsOne("Clinics.Domain.Aggregates.PatientAggregate.ValueObjects.PlaceOfBirth", "PlaceOfBirth", b1 =>
+                    b.OwnsOne("Clinics.Domain.Aggregates.PatientAggregate.Patient.PlaceOfBirth#Clinics.Domain.Aggregates.PatientAggregate.ValueObjects.PlaceOfBirth", "PlaceOfBirth", b1 =>
                         {
                             b1.Property<Guid>("PatientId")
                                 .HasColumnType("uniqueidentifier");
@@ -267,7 +267,7 @@ namespace Clinics.Infrastructure.EntityFramework.Command.Migrations
                                 .HasForeignKey("PatientId");
                         });
 
-                    b.OwnsOne("Clinics.Domain.Aggregates.PatientAggregate.ValueObjects.RG", "RG", b1 =>
+                    b.OwnsOne("Clinics.Domain.Aggregates.PatientAggregate.Patient.RG#Clinics.Domain.Aggregates.PatientAggregate.ValueObjects.RG", "RG", b1 =>
                         {
                             b1.Property<Guid>("PatientId")
                                 .HasColumnType("uniqueidentifier");
@@ -317,7 +317,7 @@ namespace Clinics.Infrastructure.EntityFramework.Command.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("Clinics.Domain.Shared.MoneyValue", "Value", b1 =>
+                    b.OwnsOne("Clinics.Domain.Aggregates.PaymentAggregate.Payment.Value#Clinics.Domain.Shared.MoneyValue", "Value", b1 =>
                         {
                             b1.Property<Guid>("PaymentId")
                                 .HasColumnType("uniqueidentifier");
@@ -347,7 +347,7 @@ namespace Clinics.Infrastructure.EntityFramework.Command.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("Clinics.Domain.Shared.MoneyValue", "MoneyValue", b1 =>
+                    b.OwnsOne("Clinics.Domain.Aggregates.SessionAggregate.Entities.SessionPayment.MoneyValue#Clinics.Domain.Shared.MoneyValue", "MoneyValue", b1 =>
                         {
                             b1.Property<Guid>("SessionPaymentId")
                                 .HasColumnType("uniqueidentifier");
@@ -377,7 +377,7 @@ namespace Clinics.Infrastructure.EntityFramework.Command.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("Clinics.Domain.Shared.MoneyValue", "MoneyValue", b1 =>
+                    b.OwnsOne("Clinics.Domain.Aggregates.SessionAggregate.Session.MoneyValue#Clinics.Domain.Shared.MoneyValue", "MoneyValue", b1 =>
                         {
                             b1.Property<Guid>("SessionId")
                                 .HasColumnType("uniqueidentifier");

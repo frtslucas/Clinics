@@ -23,9 +23,10 @@ namespace Clinics.Application.Command.AddPaymentToSession
             if (session is null)
                 return Result.Fail(Error.NotFound);
 
-            var payment = new SessionPayment(MoneyValue.FromDecimal(command.PaymentValue), command.PaymentDate);
+            var value = Value.FromDecimal(command.PaymentValue);
 
-            session.AddPayment(payment);
+            var sessionPayment = new SessionPayment(value, command.PaymentDate);
+            session.AddPayment(sessionPayment);
 
             await _sessionRepository.UpdateAsync(session);
 

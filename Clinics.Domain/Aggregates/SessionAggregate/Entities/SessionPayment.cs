@@ -7,12 +7,12 @@ namespace Clinics.Domain.Aggregates.SessionAggregate.Entities
 {
     public class SessionPayment : Entity<SessionPaymentId>, IEntity<SessionPaymentId>
     {
-        public MoneyValue MoneyValue { get; private set; }
+        public Value Value { get; private set; }
         public DateTime Date { get; private set; }
 
-        public SessionPayment(MoneyValue moneyValue, DateTime date)
+        public SessionPayment(Value value, DateTime date)
         {
-            MoneyValue = moneyValue;
+            Value = value;
             Date = date;
         }
 

@@ -16,7 +16,7 @@ namespace Clinics.Domain.Aggregates.PatientAggregate
         public Address? Address { get; private set; }
         public RG? RG { get; private set; }
         public CPF? CPF { get; private set; }
-        public MoneyValue AgreedValue { get; private set; }
+        public Value AgreedValue { get; private set; }
         public byte EstimatedMonthSessions { get; private set; }
         public bool Active { get; private set; } = true;
 
@@ -29,7 +29,7 @@ namespace Clinics.Domain.Aggregates.PatientAggregate
             Address? address,
             RG? rG,
             CPF? cPF,
-            MoneyValue agreedValue,
+            Value agreedValue,
             byte estimatedMonthSessions) : base(id)
         {
             Name = name;
@@ -47,7 +47,7 @@ namespace Clinics.Domain.Aggregates.PatientAggregate
             AddDomainEvent(new PatientCreatedDomainEvent(this));
         }
 
-        public void SetAgreedValue(MoneyValue value)
+        public void SetAgreedValue(Value value)
         {
             if (!Active)
                 throw new InactivePacientException();

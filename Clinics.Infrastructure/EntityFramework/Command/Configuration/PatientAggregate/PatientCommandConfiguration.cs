@@ -67,7 +67,7 @@ namespace Clinics.Infrastructure.EntityFramework.Command.Configuration.PatientAg
 
             builder.OwnsOne(p => p.AgreedValue, av =>
             {
-                av.Property(av => av.Value)
+                av.Property(av => av.Ammount)
                     .HasColumnName(nameof(Patient.AgreedValue))
                     .HasPrecision(18, 2);
             });

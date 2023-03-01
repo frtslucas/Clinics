@@ -16,9 +16,9 @@ namespace Clinics.Infrastructure.EntityFramework.Command.Configuration.PatientAg
             builder.HasKey(p => p.Id);
             builder.Property(p => p.Id).HasConversion(id => id.Value, guid => PaymentId.FromGuid(guid));
 
-            builder.OwnsOne(p => p.MoneyValue, mv =>
+            builder.OwnsOne(p => p.Value, mv =>
             {
-                mv.Property(mv => mv.Value).HasColumnName(nameof(MoneyValue.Value)).HasPrecision(18, 2);
+                mv.Property(mv => mv.Ammount).HasColumnName(nameof(Value)).HasPrecision(18, 2);
             });
 
             builder.HasOne<Patient>()

@@ -2,7 +2,7 @@
 
 namespace Clinics.Domain.Exceptions
 {
-    internal class EmptyStateException : CustomException
+    internal class EmptyStateException : DomainException
     {
         public EmptyStateException() : base("State cannot be empty")
         {

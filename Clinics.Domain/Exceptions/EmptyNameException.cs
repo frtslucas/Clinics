@@ -2,7 +2,7 @@
 
 namespace Clinics.Domain.Exceptions
 {
-    internal sealed class EmptyNameException : CustomException
+    internal sealed class EmptyNameException : DomainException
     {
         public EmptyNameException() : base("Name cannot be empty")
         {

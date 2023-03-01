@@ -22,7 +22,7 @@ namespace Clinics.Application.Command.SetAgreedValue
             if (patient is null)
                 return Result.Fail(Error.NotFound);
 
-            var agreedValue = MoneyValue.FromDecimal(command.AgreedValue);
+            var agreedValue = Value.FromDecimal(command.AgreedValue);
             patient.SetAgreedValue(agreedValue);
 
             await _patientRepository.UpdateAsync(patient);
