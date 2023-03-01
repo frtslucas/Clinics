@@ -25,7 +25,7 @@ namespace Clinics.Application.Command.AddSessionToPatient
             if (patient is null)
                 return Result<Session>.Fail(Error.NotFound);
 
-            var session = new Session(patient, command.Date, command.Observations);
+            var session = new Session(patient, command.Date, command.Observations, command.Done);
 
             await _sessionRepository.AddAsync(session);
 

@@ -24,7 +24,7 @@ namespace Clinics.Domain.Aggregates.SessionAggregate
         private readonly List<SessionPayment> _payments = new();
         public IReadOnlyList<SessionPayment> Payments => _payments.AsReadOnly();
 
-        public Session(Patient patient, DateTime date, string? observations) 
+        public Session(Patient patient, DateTime date, string? observations, bool done = false) 
             : base()
         {
             if (!patient.Active)
@@ -37,6 +37,7 @@ namespace Clinics.Domain.Aggregates.SessionAggregate
             Value = patient.AgreedValue;
             Date = date;
             Observations = observations;
+            Done = done;
 
             AddDomainEvent(new SessionCreatedDomainEvent(this));
         }
