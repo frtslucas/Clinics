@@ -33,8 +33,8 @@ namespace Clinics.Application.Query.Models.PatientAggregate
         public string? RG { get; set; }
         public string? CPF { get; set; }
         public byte EstimatedMonthSessions { get; set; }
-        public decimal PaidValue { get => Sessions.Sum(a => a.PaidValue); }
-        public decimal ToPay { get => Sessions.Sum(a => a.ToPay); }
+        public decimal TotalPaid { get => Sessions.Sum(a => a.TotalPaid); }
+        public decimal TotalPending { get => Sessions.Sum(a => a.TotalPending); }
         public bool Active { get; set; }
 
         public virtual IList<SessionQueryModel> Sessions { get; set; } = null!;

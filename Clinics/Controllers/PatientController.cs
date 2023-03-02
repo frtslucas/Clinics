@@ -7,8 +7,9 @@ using Clinics.Application.Query.GetPatientSummaries;
 using Clinics.Application.Query.GetPatientMonthlySummaries;
 using Clinics.Domain.Aggregates.PatientAggregate;
 using Clinics.Application.DTOs;
-using Microsoft.AspNetCore.Mvc;
 using Clinics.Application.Query.GetById;
+using Clinics.Application.Query.GetPatientByNameQuery;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Clinics.API.Controllers
 {
@@ -18,6 +19,17 @@ namespace Clinics.API.Controllers
     {
         public PatientController(ICommandDispatcher commandDispatcher, IQueryDispatcher queryDispatcher) : base(commandDispatcher, queryDispatcher)
         {
+        }
+
+        [HttpGet("ByName")]
+        public async Task<ActionResult<PatientDTO>> GetPatientByNameAsync([FromQuery] GetPatientByNameQuery query)
+        {
+            var result = await _queryDispatcher.QueryAsync<GetPatientByNameQuery, PatientDTO>(query);
+
+            if (result is null)
+                return NotFound();
+
+            return Ok(result);
         }
 
         [HttpGet("Summaries")]

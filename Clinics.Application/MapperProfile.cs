@@ -23,8 +23,7 @@ namespace Clinics.Application
                 .ForMember(a => a.ActualMonthSessions, opts => opts.MapFrom(b => (byte)b.Sessions.Count(s => s.Done)));
 
             CreateProjection<SessionQueryModel, SessionSummaryDTO>()
-                .ForMember(a => a.PatientInitials, opts => opts.MapFrom(b => b.Patient != null ? b.Patient.Name.GetInitials() : string.Empty))
-                .ForMember(a => a.PaidValue, opts => opts.MapFrom(b => b.Payments.Sum(c => c.Value)));
+                .ForMember(a => a.PatientInitials, opts => opts.MapFrom(b => b.Patient != null ? b.Patient.Name.GetInitials() : string.Empty));
         }
     }
 }

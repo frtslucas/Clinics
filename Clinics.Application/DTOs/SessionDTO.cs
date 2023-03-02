@@ -12,7 +12,8 @@ namespace Clinics.Application.DTOs
         public string? Observations { get; set; }
         public bool Done { get; set; }
         public bool Paid { get; set; }
-        public decimal? ToPay { get; set; }
+        public decimal? TotalPaid { get; set; }
+        public decimal? TotalPending { get; set; }
 
         public IList<SessionPaymentDTO>? Payments { get; set; }
     }

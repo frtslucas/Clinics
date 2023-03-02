@@ -24,5 +24,10 @@ namespace Clinics.Infrastructure.EntityFramework.Query.QueryRepository
 
             return Task.FromResult(query);
         }
+
+        public async Task<PatientQueryModel?> GetPatientByNameAsync(string name)
+        {
+            return await _dbSetWithInclude.SingleOrDefaultAsync(a => a.Name.ToLower() == name.ToLower());
+        }
     }
 }

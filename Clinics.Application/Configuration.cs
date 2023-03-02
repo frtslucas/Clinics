@@ -12,6 +12,7 @@ using Clinics.Application.DTOs;
 using Clinics.Application.Query;
 using Clinics.Application.Query.GetAll;
 using Clinics.Application.Query.GetById;
+using Clinics.Application.Query.GetPatientByNameQuery;
 using Clinics.Application.Query.GetPatientMonthlySummaries;
 using Clinics.Application.Query.GetPatientSummaries;
 using Clinics.Application.Query.GetSessionSummaries;
@@ -55,6 +56,7 @@ namespace Clinics.Application
             services.AddQueryHandler<GetPatientSummariesQuery, IEnumerable<PatientSummaryDTO>, GetPatientSummariesQueryHandler>();
             services.AddQueryHandler<GetPatientMonthlySummariesQuery, IEnumerable<PatientMonthlySummaryDTO>, GetPatientMonthlySummariesQueryHandler>();
             services.AddQueryHandler<GetSessionSummariesQuery, IEnumerable<SessionSummaryDTO>, GetSessionSummariesQueryHandler>();
+            services.AddQueryHandler<GetPatientByNameQuery, PatientDTO, GetPatientByNameQueryHandler>();
 
             return services;
         }
