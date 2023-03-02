@@ -4,12 +4,12 @@ using Clinics.Domain.Aggregates.PatientAggregate;
 using Clinics.Domain.Aggregates.PatientAggregate.ValueObjects;
 using Clinics.Domain.Aggregates.PaymentAggregate;
 using Clinics.Domain.Aggregates.SessionAggregate;
-using Clinics.Domain.DomainServices;
+using Clinics.Domain.Services.PaymentProcessor;
 using Clinics.Domain.Shared;
 
 namespace Clinics.Application.Command.ProcessPatientPayment
 {
-    internal sealed class ProcessPatientPaymentCommandHandler : ICommandHandler<ProcessPatientPaymentCommand>
+    internal sealed class ProcessPatientPaymentCommandHandler : ICommandHandler<ProcessPatientPaymentCommand, Payment>
     {
         private readonly IPatientRepository _patientRepository;
         private readonly IPaymentRepository _paymentRepository;
@@ -28,20 +28,23 @@ namespace Clinics.Application.Command.ProcessPatientPayment
             _paymentProcessor = paymentProcessor;
         }
 
-        public async Task<Result> HandleAsync(ProcessPatientPaymentCommand command)
+        public async Task<Result<Payment>> HandleAsync(ProcessPatientPaymentCommand command)
         {
             var patientId = PatientId.FromGuid(command.PatientId);
 
             if (!await _patientRepository.ExistsByIdAsync(patientId))
-                return Result.Fail(Error.NotFound);
+                return Result<Payment>.Fail(Error.NotFound);
 
-            var payment = new Payment(patientId, Value.FromDecimal(command.MoneyValue), command.Date);
-            var updatedSessions = await _paymentProcessor.AssignPaymentToSessionsAsync(payment);
+            var payment = new Payment(patientId, Value.FromDecimal(command.ValueAmount), command.Date);
+            
+            var result = await _paymentProcessor.AssignPaymentToSessionsAsync(payment);
 
-            await _sessionRepository.UpdateManyAsync(updatedSessions);
+            await _sessionRepository.UpdateManyAsync(result.SessionsUpdated);
+            await _sessionRepository.AddManyAsync(result.NewSessions);
+
             await _paymentRepository.AddAsync(payment);
             
-            return Result.Success;
+            return Result<Payment>.SuccessWithValue(payment);
         }
     }
 }

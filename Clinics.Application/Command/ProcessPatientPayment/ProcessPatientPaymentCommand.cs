@@ -6,7 +6,7 @@ namespace Clinics.Application.Command.ProcessPatientPayment
     public record ProcessPatientPaymentCommand : ICommand<Payment>
     {
         public Guid PatientId { get; set; } = default!;
-        public decimal MoneyValue { get; set; }
+        public decimal ValueAmount { get; set; }
         public DateTime Date { get; set; }
     }
 }

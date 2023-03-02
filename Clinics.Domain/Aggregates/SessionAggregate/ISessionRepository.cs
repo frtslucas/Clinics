@@ -8,6 +8,9 @@ namespace Clinics.Domain.Aggregates.SessionAggregate
     public interface ISessionRepository : IRepository<Session, SessionId>
     {
         Task<IReadOnlyList<Session>> GetUnpaidSessionsFromPatientAsync(PatientId patientId);
+        Task<Session?> GetLastPatientSessionAsync(PatientId patientId);
+
+        Task AddManyAsync(IEnumerable<Session> sessions);
         Task UpdateManyAsync(IEnumerable<Session> sessions);
     }
 }

@@ -21,7 +21,7 @@ using Clinics.Application.Query.Models.SessionAggregate;
 using Clinics.Domain.Aggregates.PatientAggregate;
 using Clinics.Domain.Aggregates.PaymentAggregate;
 using Clinics.Domain.Aggregates.SessionAggregate;
-using Clinics.Domain.DomainServices;
+using Clinics.Domain.Services.PaymentProcessor;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Clinics.Application
@@ -47,7 +47,7 @@ namespace Clinics.Application
             services.AddCommandHandler<ReactivatePatientCommand, ReactivatePatientCommandHandler>();
             services.AddCommandHandler<RegisterPatientCommand, Patient, RegisterPatientCommandHandler>();
             services.AddCommandHandler<SetAgreedValueCommand, SetAgreedValueCommandHandler>();
-            services.AddCommandHandler<ProcessPatientPaymentCommand, ProcessPatientPaymentCommandHandler>();
+            services.AddCommandHandler<ProcessPatientPaymentCommand, Payment, ProcessPatientPaymentCommandHandler>();
 
             services.AddQueryHandlers<PatientQueryModel, PatientDTO>();
             services.AddQueryHandlers<SessionQueryModel, SessionDTO>();

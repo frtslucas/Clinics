@@ -17,6 +17,16 @@ namespace Clinics.Infrastructure.EntityFramework.Command.Repositories
             return (await _aggregate.Where(a => a.PatientId == patientId && a.Paid == false).ToListAsync()).AsReadOnly();
         }
 
+        public async Task<Session?> GetLastPatientSessionAsync(PatientId patientId)
+        {
+            return await _aggregate.Where(a => a.PatientId == patientId).OrderByDescending(a => a.Date).FirstOrDefaultAsync();
+        }
+
+        public Task AddManyAsync(IEnumerable<Session> sessions)
+        {
+            return Task.Run(() => _dbSet.AddRange(sessions));
+        }
+
         public Task UpdateManyAsync(IEnumerable<Session> sessions)
         {
             return Task.FromResult(() => _dbSet.UpdateRange(sessions));

@@ -17,7 +17,7 @@ namespace Clinics.Infrastructure.EntityFramework.Command.Configuration.SessionAg
 
             builder.OwnsOne(p => p.Value, mv =>
             {
-                mv.Property(mv => mv.Ammount).HasColumnName(nameof(Value)).HasPrecision(18, 2);
+                mv.Property(mv => mv.Amount).HasColumnName("Value").HasPrecision(18, 2);
             });
         }
     }

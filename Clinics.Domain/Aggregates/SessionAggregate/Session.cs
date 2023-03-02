@@ -15,17 +15,16 @@ namespace Clinics.Domain.Aggregates.SessionAggregate
         public PatientId PatientId { get; init; }
 
         public Value Value { get; private set; }
-        public DateTime Date { get; set; }
+        public DateTime Date { get; private set; }
         public string? Observations { get; private set; }
         public bool Done { get; private set; }
         public bool Paid { get; private set; }
-        public Value UnpaidValue { get => Value - Value.FromDecimal(_payments.Sum(a => a.Value.Ammount)); }
+        public Value UnpaidValue { get => Value - Value.FromDecimal(_payments.Sum(a => a.Value.Amount)); }
 
         private readonly List<SessionPayment> _payments = new();
         public IReadOnlyList<SessionPayment> Payments => _payments.AsReadOnly();
 
-        public Session(Patient patient, DateTime date, string? observations, bool done = false) 
-            : base()
+        public Session(Patient patient, DateTime date, string? observations = null, bool done = false) : base()
         {
             if (!patient.Active)
                 throw new InactivePacientException();
@@ -33,8 +32,8 @@ namespace Clinics.Domain.Aggregates.SessionAggregate
             if (patient.AgreedValue is null)
                 throw new AgreedValueNotSetException(patient.Name);
 
-            PatientId = patient.Id;
-            Value = patient.AgreedValue;
+            PatientId = patient.Id with { };
+            Value = patient.AgreedValue with { };
             Date = date;
             Observations = observations;
             Done = done;
@@ -57,14 +56,14 @@ namespace Clinics.Domain.Aggregates.SessionAggregate
 
         public void AddPayment(SessionPayment payment)
         {
-            if (_payments.Sum(a => a.Value.Ammount) + payment.Value.Ammount > Value.Ammount)
+            if (_payments.Sum(a => a.Value.Amount) + payment.Value.Amount > Value.Amount)
                 throw new InvalidPaymentException();
 
             _payments.Add(payment);
 
             AddDomainEvent(new SessionPaymentAddedToSessionDomainEvent(Id, payment.Id));
 
-            Paid = _payments.Sum(a => a.Value.Ammount) == Value.Ammount;
+            Paid = _payments.Sum(a => a.Value.Amount) == Value.Amount;
 
             if (Paid)
                 AddDomainEvent(new SessionPaidDomainEvent(Id));

@@ -1,6 +1,6 @@
 ﻿namespace Clinics.Domain.Abstractions
 {
-    public abstract class DomainException : Exception
+    public class DomainException : Exception
     {
         protected DomainException()
         {

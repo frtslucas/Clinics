@@ -1,7 +1,6 @@
 ﻿using Clinics.Domain.Aggregates.PatientAggregate;
 using Clinics.Domain.Aggregates.SessionAggregate;
 using Clinics.Domain.Aggregates.SessionAggregate.ValueObjects;
-using Clinics.Domain.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -16,9 +15,9 @@ namespace Clinics.Infrastructure.EntityFramework.Command.Configuration.SessionAg
             builder.HasKey(s => s.Id);
             builder.Property(s => s.Id).HasConversion(id => id.Value, guid => SessionId.FromGuid(guid));
 
-            builder.OwnsOne(s => s.Value, mv =>
+            builder.OwnsOne(s => s.Value, owned =>
             {
-                mv.Property(mv => mv.Ammount).HasColumnName(nameof(Value)).HasPrecision(18, 2);
+                owned.Property(v => v.Amount).HasColumnName("Value").HasPrecision(18, 2);
             });
 
             builder.HasOne<Patient>()
