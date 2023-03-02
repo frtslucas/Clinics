@@ -2,6 +2,7 @@
 using Clinics.Application.Command;
 using Clinics.Application.Command.AddPaymentToSession;
 using Clinics.Application.Command.AddSessionToPatient;
+using Clinics.Application.Command.EditSessionDate;
 using Clinics.Application.Command.InactivatePatient;
 using Clinics.Application.Command.MarkSessionAsDone;
 using Clinics.Application.Command.ProcessPatientPayment;
@@ -49,6 +50,7 @@ namespace Clinics.Application
             services.AddCommandHandler<RegisterPatientCommand, Patient, RegisterPatientCommandHandler>();
             services.AddCommandHandler<SetAgreedValueCommand, SetAgreedValueCommandHandler>();
             services.AddCommandHandler<ProcessPatientPaymentCommand, Payment, ProcessPatientPaymentCommandHandler>();
+            services.AddCommandHandler<EditSessionDateCommand, EditSessionDateCommandHandler>();
 
             services.AddQueryHandlers<PatientQueryModel, PatientDTO>();
             services.AddQueryHandlers<SessionQueryModel, SessionDTO>();

@@ -5,8 +5,9 @@ using Clinics.Application.Command.MarkSessionAsDone;
 using Clinics.Application.Query.GetSessionSummaries;
 using Clinics.Application.DTOs;
 using Clinics.Domain.Aggregates.SessionAggregate;
-using Microsoft.AspNetCore.Mvc;
 using Clinics.Application.Query.GetById;
+using Clinics.Application.Command.EditSessionDate;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Clinics.API.Controllers
 {
@@ -38,13 +39,32 @@ namespace Clinics.API.Controllers
         public async Task<IActionResult> AddPaymentToSessionAsync([FromBody] AddPaymentToSessionCommand command)
         {
             var result =  await _commandDispatcher.DispatchAsync(command);
+
+            if (!result.IsValid)
+                return BadRequest(result.Message);
+
             return Ok();
         }
 
         [HttpPut("MarkAsDone")]
         public async Task<IActionResult> MarkAsDone([FromBody] MarkSessionAsDoneCommand command)
         {
-            await _commandDispatcher.DispatchAsync(command);
+            var result = await _commandDispatcher.DispatchAsync(command);
+
+            if (!result.IsValid)
+                return BadRequest(result.Message);
+
+            return Ok();
+        }
+
+        [HttpPut("EditDate")]
+        public async Task<IActionResult> EditDate([FromBody] EditSessionDateCommand command)
+        {
+            var result = await _commandDispatcher.DispatchAsync(command);
+
+            if (!result.IsValid)
+                return BadRequest(result.Message);
+
             return Ok();
         }
     }

@@ -48,6 +48,16 @@ namespace Clinics.Domain.Aggregates.SessionAggregate
             AddDomainEvent(new SessionDoneDomainEvent(PatientId, Id));
         }
 
+        public void EditDate(DateTime newDate)
+        {
+            if (Done)
+                throw new CantEditSessionDateException();
+
+            Date = newDate;
+
+            AddDomainEvent(new SessionDateEditedDomainEvent(this));
+        }
+
         public void AddPayment(Value value, DateTime dateTime)
         {
             var sessionPayment = new SessionPayment(value, dateTime);
