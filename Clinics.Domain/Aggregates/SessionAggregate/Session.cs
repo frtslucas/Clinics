@@ -32,8 +32,9 @@ namespace Clinics.Domain.Aggregates.SessionAggregate
             if (patient.AgreedValue is null)
                 throw new AgreedValueNotSetException(patient.Name);
 
-            PatientId = patient.Id with { };
-            Value = patient.AgreedValue with { };
+            if (done && date > DateTime.Now)
+                throw new InvalidSessionDateException("If Session is done than the Date can't be higher than today");
+
             PatientId = patient.Id.Clone();
             Value = patient.AgreedValue.Clone();
             Date = date;
