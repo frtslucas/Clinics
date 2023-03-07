@@ -4,7 +4,7 @@ using Clinics.Domain.Exceptions;
 
 namespace Clinics.Domain.Aggregates.PatientAggregate.ValueObjects
 {
-    public class Name : ValueObjectClass, IValueObject
+    public record Name : ValueObject, IValueObject
     {
         public string Value { get; } = null!;
 

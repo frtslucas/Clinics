@@ -34,6 +34,8 @@ namespace Clinics.Domain.Aggregates.SessionAggregate
 
             PatientId = patient.Id with { };
             Value = patient.AgreedValue with { };
+            PatientId = patient.Id.Clone();
+            Value = patient.AgreedValue.Clone();
             Date = date;
             Observations = observations;
             Done = done;

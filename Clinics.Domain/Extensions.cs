@@ -1,4 +1,6 @@
-﻿namespace Clinics.Domain
+﻿using Clinics.Domain.Abstractions;
+
+namespace Clinics.Domain
 {
     internal static class Extensions
     {
@@ -13,6 +15,12 @@
             {
                 throw new Exception("Value too short to substitute all substitute characters in the mask", e);
             }
+        }
+
+        public static T Clone<T>(this T obj)
+            where T : ValueObject
+        {
+            return obj with { };
         }
     }
 }

@@ -5,8 +5,4 @@ namespace Clinics.Domain.Abstractions
     public abstract record ValueObject : IValueObject
     {
     }
-
-    public abstract class ValueObjectClass : IValueObject
-    { 
-    }
 }
